@@ -214,7 +214,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Переключатель темы */
         .theme-switcher {
             position: fixed;
             top: 20px;
@@ -497,7 +496,6 @@
     </footer>
 
     <script>
-        // Переключатель темы
         const themeSwitcher = document.getElementById('themeSwitcher');
         const themeIcons = document.querySelectorAll('.theme-icon');
         const body = document.body;
@@ -510,17 +508,14 @@
                 themeIcons.forEach(i => i.classList.remove('active'));
                 icon.classList.add('active');
                 
-                // Сохраняем выбор в localStorage
                 localStorage.setItem('theme', theme);
             });
         });
         
-        // Проверяем сохраненную тему при загрузке
         const savedTheme = localStorage.getItem('theme') || 'dark';
         body.setAttribute('data-theme', savedTheme);
         document.querySelector(`.theme-icon[data-theme="${savedTheme}"]`).classList.add('active');
 
-        // Плавный скролл
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -530,7 +525,6 @@
             });
         });
 
-        // Анимация при загрузке
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 document.body.classList.add('loaded');

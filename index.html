@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои Проекты — Dark Mode</title>
+    <style>
+        :root {
+            --primary: #8a63f2;
+            --secondary: #63f2c8;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #e0e0e0;
+            --lighter: #ffffff;
+            --accent: #ff7e5f;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+        }
+
+        [data-theme="light"] {
+            --dark: #f9f9f9;
+            --darker: #e0e0e0;
+            --light: #333333;
+            --lighter: #121212;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-secondary: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.1s;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--darker));
+            color: var(--lighter);
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(0,0,0,0.2)" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"></path></svg>');
+            background-size: 100% 100%;
+            pointer-events: none;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s 0.3s ease both;
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            animation: fadeIn 1s 0.6s ease both;
+        }
+
+        .social-links a {
+            color: var(--lighter);
+            background: rgba(255, 255, 255, 0.15);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(var(--primary), 0.3);
+        }
+
+        .project-image {
+            height: 180px;
+            background-size: cover;
+          background-position: center;
+            position: relative;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--lighter);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .play-link {
+            background: var(--primary);
+            color: white;
+        }
+
+        .play-link:hover {
+            background: #7a4fdf;
+        }
+
+        .read-link {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .read-link:hover {
+            background: rgba(var(--primary), 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--darker);
+            color: var(--text);
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Переключатель темы */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            display: flex;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-switcher input {
+            display: none;
+        }
+
+        .theme-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .theme-icon.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .project-card {
+            opacity: 0;
+            animation: cardAppear 0.5s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            to { opacity: 1; }
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .theme-switcher {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Переключатель темы -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <div class="theme-icon active" data-theme="dark">🌙</div>
+        <div class="theme-icon" data-theme="light">☀️</div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <h1>Kirill Florik</h1>
+            <p class="tagline">Разработчик игр и статей</p>
+            <div class="social-links">
+                <a href="https://t.me/klubflorika" title="TGK">TGK</a>
+                <a href="https://vk.com/Kirill_Florik" title="VK">VK</a>
+                <a href="https://t.me/Kirill_Florik" title="Telegram">TG</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">Проекты</h2>
+        
+        <div class="projects-grid">
+          
+            <!-- Проект 1 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">cat-clicker</h3>
+                    <p class="project-description">Кликай котиков и получи больше всех кликов, будь лучше!</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/cat-clicker" class="project-link play-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 2 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">thimbles</h3>
+                    <p class="project-description">Угадай где шарик и набери больше всего очков</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/thimbles" class="project-link read-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 3 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">Змейка"</h3>
+                    <p class="project-description">Стандартная игра змейка(доступ с пк)</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/snake" class="project-link play-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 4 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">hello</h3>
+                    <p class="project-description">простой фон с красивым переливающимся текстом</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/hello" class="project-link read-link">Смотреть</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 5 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">Заработок для подростков</h3>
+                    <p class="project-description">Найди для себя работ, не будь зависим от родителей</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/sell/" class="project-link play-link">Читать</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 6 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">tick tack</h3>
+                    <p class="project-description">игра с другом в крестики нолики на поле 3х3</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/tic-tac" class="project-link read-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+          
+            <!-- Проект 7 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">space-memory-game</h3>
+                    <p class="project-description">Игра на память</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/space-memory-game" class="project-link read-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 8 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">BlackJack</h3>
+                    <p class="project-description">Азартная игра с ботом, играй с игровой валютой без доната</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/BJ/" class="project-link read-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 9 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">XSS инъекция(белый хакер)</h3>
+                    <p class="project-description">Пройди все уровни и докажи что ты должен быть белым хакером! *сделано Chat'om GPT*</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.github.io/injection/" class="project-link read-link">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 10 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">Твой выбор играть в samp</h3>
+                    <p class="project-description">Найди для себя подхождящий проект для игры в самп</p>
+                    <div class="project-links">
+                        <a href="https://kirill-fe.GitHub.io/samp"" class="project-link read-link">Читать</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 11 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">NAME</h3>
+                    <p class="project-description">TITLE</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link read-link">Читать/Играть</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 12 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">NAME</h3>
+                    <p class="project-description">TITLE</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link read-link">Читать/Играть</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 13 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">NAME</h3>
+                    <p class="project-description">TITLE</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link read-link">Читать/Играть</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 14 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">NAME</h3>
+                    <p class="project-description">TITLE</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link read-link">Читать/Играть</a>
+                    </div>
+                </div>
+            </div>
+
+                      <!-- Проект 15 -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('');"></div>
+                <div class="project-info">
+                    <h3 class="project-title">NAME</h3>
+                    <p class="project-description">TITLE</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link read-link">Читать/Играть</a>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 projects new design</p>
+    </footer>
+
+    <script>
+        // Переключатель темы
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const themeIcons = document.querySelectorAll('.theme-icon');
+        const body = document.body;
+        
+        themeIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const theme = icon.getAttribute('data-theme');
+                body.setAttribute('data-theme', theme);
+                
+                themeIcons.forEach(i => i.classList.remove('active'));
+                icon.classList.add('active');
+                
+                // Сохраняем выбор в localStorage
+                localStorage.setItem('theme', theme);
+            });
+        });
+        
+        // Проверяем сохраненную тему при загрузке
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        document.querySelector(`.theme-icon[data-theme="${savedTheme}"]`).classList.add('active');
+
+        // Плавный скролл
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Анимация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 200);
+        });
+    </script>
+</body>
+</html>

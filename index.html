@@ -7,6 +7,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="https://vki7.okcdn.ru/i?r=CICaQJv1RQZIqEhgaodSLR1KLtxTOn52Q4RHLL7Vm3JVBGZbP3leH0RC5qO3gdzrmxuIHSJekcCfq2q6Wou6tMyrsUbZmdCaNbGhOrd_ehQqSoL-kCi5R9bXIN43r7qpJs4cUsS2seUyucPvclnSMa_tJWrI_5wHZ6_IOE4EGRzbjuzjTh_BQso7CQEXZv_JQcg-W5H3Yc-dwHL7AAAAKQ" type="image/x-icon">
     <style>
+                /* Курсор для input полей */
+        input, textarea {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2363f2c8" d="M12 1c4.97 0 9 3.59 9 8 0 2.38-.93 4.51-2.42 5.96l1.42 1.42C20.04 15.14 21 12.74 21 10c0-5.52-4.48-10-10-10S1 4.48 1 10s4.48 10 10 10c1.27 0 2.47-.24 3.57-.66l1.43 1.43C14.61 21.27 13.35 21.5 12 21.5c-6.33 0-11.5-5.17-11.5-11.5S5.67.5 12 .5zM9.5 7.5h2v2h-2zm0 3h2v2h-2zm3 0h2v2h-2zm-3 3h2v2h-2zm3 0h2v2h-2z"/></svg>'), 
+              text;
+        }
+
+        /* Стили для выделения текста */
+        ::selection {
+            background: var(--primary);
+            color: var(--lighter);
+            text-shadow: none;
+        }
+
+        /* Для Firefox */
+        ::-moz-selection {
+            background: var(--primary);
+            color: var(--lighter);
+            text-shadow: none;
+        }
+
+        /* Стиль курсора */
+        html {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%238a63f2" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), 
+                auto;
+        }
+
+        /* Изменение курсора при наведении на ссылки и кнопки */
+        a, button, .project-link, .choice-btn, .npc-btn, .item {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff7e5f" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), 
+                pointer;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px; 
+            height: 12px; 
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7a4fdf;
+        }
+        
         ::-webkit-scrollbar {
             width: 12px; 
             height: 12px; 

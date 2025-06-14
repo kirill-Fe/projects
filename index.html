@@ -530,10 +530,10 @@
             <div class="project-card">
                 <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                 <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
+                    <h3 class="project-title">Игра наъодится в тесте</h3>
+                    <p class="project-description">Игра выйдет примерно через 2 недели</p>
                     <div class="project-links">
-                        <a href="#" class="project-link play-link">Читать/Играть</a>
+                        <a href="#" class="project-link play-link" id="ErrorGame">Играть</a>
                     </div>
                 </div>
             </div>
@@ -701,5 +701,20 @@
             }, 200);
         });
     </script>
+
+        <!-- Ошибка проекта 11 -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+const errorElement = document.getElementById('ErrorGame');
+  
+  if (errorElement) {
+    errorElement.addEventListener('click', function(e) {
+      e.preventDefault();
+    alert('Вам не доступен проект 11 (новая игра)');
+    });
+  }
+});
+    </script>
+    
 </body>
 </html>

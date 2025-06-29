@@ -7,28 +7,110 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="https://vki7.okcdn.ru/i?r=CICaQJv1RQZIqEhgaodSLR1KLtxTOn52Q4RHLL7Vm3JVBGZbP3leH0RC5qO3gdzrmxuIHSJekcCfq2q6Wou6tMyrsUbZmdCaNbGhOrd_ehQqSoL-kCi5R9bXIN43r7qpJs4cUsS2seUyucPvclnSMa_tJWrI_5wHZ6_IOE4EGRzbjuzjTh_BQso7CQEXZv_JQcg-W5H3Yc-dwHL7AAAAKQ" type="image/x-icon">
     <style>
+        /* Анимация загрузки */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .loader-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loader-inner:nth-child(1) {
+            animation-delay: 0.1s;
+            border-top-color: var(--secondary);
+        }
+        
+        .loader-inner:nth-child(2) {
+            animation-delay: 0.2s;
+            border-top-color: var(--accent);
+        }
+        
+        .loader-inner:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
+            margin-top: 20px;
+            color: var(--lighter);
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeInText 0.5s ease 0.3s forwards;
+        }
+        
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+        
+        .content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loaded .content {
+            opacity: 1;
+        }
+        
+        .loaded .loader-wrapper {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Курсор для input полей */
         input, textarea {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2363f2c8" d="M12 1c4.97 0 9 3.59 9 8 0 2.38-.93 4.51-2.42 5.96l1.42 1.42C20.04 15.14 21 12.74 21 10c0-5.52-4.48-10-10-10S1 4.48 1 10s4.48 10 10 10c1.27 0 2.47-.24 3.57-.66l1.43 1.43C14.61 21.27 13.35 21.5 12 21.5c-6.33 0-11.5-5.17-11.5-11.5S5.67.5 12 .5zM9.5 7.5h2v2h-2zm0 3h2v2h-2zm3 0h2v2h-2zm-3 3h2v2h-2zm3 0h2v2h-2z"/></svg>'), 
               text;
         }
 
+        /* Стили для выделения текста */
         ::selection {
             background: var(--primary);
             color: var(--lighter);
             text-shadow: none;
         }
 
+        /* Для Firefox */
         ::-moz-selection {
             background: var(--primary);
             color: var(--lighter);
             text-shadow: none;
         }
 
+        /* Стиль курсора */
         html {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%238a63f2" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), 
                 auto;
         }
 
+        /* Изменение курсора при наведении на ссылки и кнопки */
         a, button, .project-link, .choice-btn, .npc-btn, .item {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff7e5f" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), 
                 pointer;
@@ -191,6 +273,14 @@
             transition: all 0.3s ease;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-card:hover {
@@ -324,37 +414,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .project-card {
-            opacity: 0;
-            animation: cardAppear 0.5s ease forwards;
-        }
-
-        @keyframes cardAppear {
-            to { opacity: 1; }
-        }
-
-        .project-card:nth-child(1) { animation-delay: 0.1s; }
-        .project-card:nth-child(2) { animation-delay: 0.2s; }
-        .project-card:nth-child(3) { animation-delay: 0.3s; }
-        .project-card:nth-child(4) { animation-delay: 0.4s; }
-        .project-card:nth-child(5) { animation-delay: 0.5s; }
-        .project-card:nth-child(6) { animation-delay: 0.6s; }
-        .project-card:nth-child(7) { animation-delay: 0.7s; }
-        .project-card:nth-child(8) { animation-delay: 0.8s; }
-        .project-card:nth-child(9) { animation-delay: 0.9s; }
-        .project-card:nth-child(10) { animation-delay: 1.0s; }
-        .project-card:nth-child(11) { animation-delay: 1.1s; }
-        .project-card:nth-child(12) { animation-delay: 1.2s; }
-        .project-card:nth-child(13) { animation-delay: 1.3s; }
-        .project-card:nth-child(14) { animation-delay: 1.4s; }
-        .project-card:nth-child(15) { animation-delay: 1.5s; }
-        .project-card:nth-child(16) { animation-delay: 1.6s; }
-        .project-card:nth-child(17) { animation-delay: 1.7s; }
-        .project-card:nth-child(18) { animation-delay: 1.8s; }
-        .project-card:nth-child(19) { animation-delay: 1.9s; }
-        .project-card:nth-child(20) { animation-delay: 2.0s; }
-        .project-card:nth-child(21) { animation-delay: 2.1s; }
-
         @media (max-width: 768px) {
             .projects-grid {
                 grid-template-columns: 1fr;
@@ -372,289 +431,351 @@
     </style>
 </head>
 <body data-theme="dark">
-    <!-- Переключатель темы -->
-    <div class="theme-switcher" id="themeSwitcher">
-        <div class="theme-icon active" data-theme="dark">🌙</div>
-        <div class="theme-icon" data-theme="light">☀️</div>
+    <!-- Анимация загрузки -->
+    <div class="loader-wrapper">
+        <div class="loader">
+            <div class="loader-inner"></div>
+            <div class="loader-inner"></div>
+            <div class="loader-inner"></div>
+        </div>
+        <div class="loader-text">Загрузка...</div>
     </div>
 
-    <header>
-        <div class="header-content">
-            <h1>Kirill Florik</h1>
-            <p class="tagline">Разработчик игр и статей</p>
-            <div class="social-links">
-                <a href="https://t.me/klubflorika" title="TGK" class="TGK" target="_blank"> <img src="./IMG/KF.png" alt="TGK" style="width: 100%; border-radius: 100px;"> </a>
-                <a href="https://vk.com/Kirill_Florik" title="VK" class="VK" target="_blank"><i class="fab fa-vk"></i> </a>
-                <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> <i class="fab fa-telegram"></i> </a>
+    <!-- Основной контент -->
+    <div class="content">
+        <!-- Переключатель темы -->
+        <div class="theme-switcher" id="themeSwitcher">
+            <div class="theme-icon active" data-theme="dark">🌙</div>
+            <div class="theme-icon" data-theme="light">☀️</div>
+        </div>
+
+        <header>
+            <div class="header-content">
+                <h1>Florik projects</h1>
+                <p class="tagline">игры и статей</p>
+                <div class="social-links">
+                    <a href="https://t.me/klubflorika" title="TGK" class="TGK" target="_blank"> <img src="./IMG/KF.png" alt="TGK" style="width: 100%; border-radius: 100px;"> </a>
+                    <a href="https://vk.com/Kirill_Florik" title="VK" class="VK" target="_blank"><i class="fab fa-vk"></i> </a>
+                    <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> <i class="fab fa-telegram"></i> </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">Проекты</h2>
+            
+            <div class="projects-grid" id="projectsGrid">
+              
+                <!-- Проект 1 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Cat-clicker.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">cat-clicker</h3>
+                        <p class="project-description">Кликай котиков и получи больше всех кликов, будь лучше!</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/cat-clicker" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 2 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Thim.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">thimbles</h3>
+                        <p class="project-description">Угадай где шарик и набери больше всего очков</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/thimbles" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 3 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Змейка.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">Змейка</h3>
+                        <p class="project-description">Стандартная игра змейка(доступ с пк)</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/snake" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 4 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Прив.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">hello</h3>
+                        <p class="project-description">простой фон с красивым переливающимся текстом</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/hello" class="project-link play-link" target="_blank">Смотреть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 5 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Работа\ для\ подростков.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">Заработок для подростков</h3>
+                        <p class="project-description">Найди для себя работу, не будь зависим от родителей</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/sell/" class="project-link play-link" target="_blank">Читать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 6 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Крестики\ нолики.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">Tic-Tac-Toe</h3>
+                        <p class="project-description">игра с другом в крестики нолики на поле 3х3</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/tic-tac" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+              
+                <!-- Проект 7 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Космо\ игра.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">space-memory-game</h3>
+                        <p class="project-description">Игра на память</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/space-memory-game" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 8 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/BJ.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">BlackJack</h3>
+                        <p class="project-description">Азартная игра с ботом, играй с игровой валютой без доната</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/BJ/" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 9 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/XSS.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">XSS инъекция(белый хакер)</h3>
+                        <p class="project-description">Пройди все уровни и докажи что ты должен быть белым хакером! *сделано Chat'om GPT*</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/injection/" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 10 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Твой\ выбор\ играть\ в\ самп.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">Твой выбор играть в samp</h3>
+                        <p class="project-description">Найди для себя подхождящий проект для игры в самп</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.GitHub.io/samp" class="project-link play-link" target="_blank">Читать</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 11 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/Сервак\ в\ самп.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">Russia.RPG</h3>
+                        <p class="project-description">Сервер в самп. Установи лаунчер как на пк так и на мобилу. Вся инфа там</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/russia.rpg/" class="project-link play-link" target="_blank">Читать</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 12 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('./IMG/det.png');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">Детектив: Тайна особняка Блэквуда</h3>
+                        <p class="project-description">(есть какой то баг то пиши мне <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> Kirill_Florik</a>)</p>
+                        <div class="project-links">
+                            <a href="https://kirill-fe.github.io/detective/" class="project-link play-link" target="_blank">Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 13 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 14 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 15 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                                          <!-- Проект 16 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 17 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 18 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 19 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 20 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+
+                          <!-- Проект 21 -->
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                    <div class="project-info">
+                        <h3 class="project-title">NAME</h3>
+                        <p class="project-description">TITLE</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                        </div>
+                    </div>
+                </div>
+              
             </div>
         </div>
-    </header>
 
-    <div class="container">
-        <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">Проекты</h2>
-        
-        <div class="projects-grid">
-          
-            <!-- Проект 1 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Cat-clicker.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">cat-clicker</h3>
-                    <p class="project-description">Кликай котиков и получи больше всех кликов, будь лучше!</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/cat-clicker" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 2 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Thim.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">thimbles</h3>
-                    <p class="project-description">Угадай где шарик и набери больше всего очков</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/thimbles" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 3 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Змейка.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">Змейка</h3>
-                    <p class="project-description">Стандартная игра змейка(доступ с пк)</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/snake" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 4 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Прив.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">hello</h3>
-                    <p class="project-description">простой фон с красивым переливающимся текстом</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/hello" class="project-link play-link" target="_blank">Смотреть</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 5 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Работа\ для\ подростков.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">Заработок для подростков</h3>
-                    <p class="project-description">Найди для себя работу, не будь зависим от родителей</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/sell/" class="project-link play-link" target="_blank">Читать</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 6 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Крестики\ нолики.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">Tic-Tac-Toe</h3>
-                    <p class="project-description">игра с другом в крестики нолики на поле 3х3</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/tic-tac" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-          
-            <!-- Проект 7 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Космо\ игра.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">space-memory-game</h3>
-                    <p class="project-description">Игра на память</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/space-memory-game" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 8 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/BJ.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">BlackJack</h3>
-                    <p class="project-description">Азартная игра с ботом, играй с игровой валютой без доната</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/BJ/" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 9 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/XSS.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">XSS инъекция(белый хакер)</h3>
-                    <p class="project-description">Пройди все уровни и докажи что ты должен быть белым хакером! *сделано Chat'om GPT*</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/injection/" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 10 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Твой\ выбор\ играть\ в\ самп.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">Твой выбор играть в samp</h3>
-                    <p class="project-description">Найди для себя подхождящий проект для игры в самп</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.GitHub.io/samp" class="project-link play-link" target="_blank">Читать</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 11 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/Сервак\ в\ самп.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">Russia.RPG</h3>
-                    <p class="project-description">Сервер в самп. Установи лаунчер как на пк так и на мобилу. Вся инфа там</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/russia.rpg/" class="project-link play-link" target="_blank">Читать</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 12 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('./IMG/det.png');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">Детектив: Тайна особняка Блэквуда</h3>
-                    <p class="project-description">(есть какой то баг то пиши мне <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> Kirill_Florik</a>)</p>
-                    <div class="project-links">
-                        <a href="https://kirill-fe.github.io/detective/" class="project-link play-link" target="_blank">Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 13 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 14 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 15 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                                  <!-- Проект 16 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 17 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 18 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 19 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 20 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-
-                      <!-- Проект 21 -->
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                <div class="project-info">
-                    <h3 class="project-title">NAME</h3>
-                    <p class="project-description">TITLE</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
-                    </div>
-                </div>
-            </div>
-          
-        </div>
+        <footer>
+            <p>© 2025 <a href="https://t.me/Kirill_Florik" title="TG">Kirill_Florik</a></p>
+        </footer>
     </div>
-
-    <footer>
-        <p>© 2025 <a href="https://t.me/Kirill_Florik" title="TG">Kirill_Florik</a></p>
-    </footer>
 
     <script>
+        // Обработка загрузки страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+                
+                // Удаляем прелоадер через 1 секунду после добавления класса loaded
+                setTimeout(() => {
+                    const loader = document.querySelector('.loader-wrapper');
+                    if (loader) {
+                        loader.remove();
+                    }
+                    
+                    // Показываем первые карточки после загрузки
+                    showInitialCards();
+                    
+                    // Добавляем обработчик прокрутки
+                    window.addEventListener('scroll', handleScroll);
+                }, 1000);
+            }, 2500); // Общее время загрузки - 2.5 секунды
+        });
+
+        // Функция для показа первых карточек
+        function showInitialCards() {
+            const cards = document.querySelectorAll('.project-card');
+            const initialCount = 6; // Количество карточек, которые показываем сразу
+            
+            cards.forEach((card, index) => {
+                if (index < initialCount) {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100); // Небольшая задержка между появлением карточек
+                }
+            });
+        }
+        
+        // Функция для обработки прокрутки
+        function handleScroll() {
+            const cards = document.querySelectorAll('.project-card:not(.visible)');
+            const triggerBottom = window.innerHeight * 0.8;
+            
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                
+                if (cardTop < triggerBottom) {
+                    card.classList.add('visible');
+                }
+            });
+        }
+
         const themeSwitcher = document.getElementById('themeSwitcher');
         const themeIcons = document.querySelectorAll('.theme-icon');
         const body = document.body;
@@ -684,25 +805,17 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 200);
-        });
-    </script>
-
-        <!-- Ошибка проекта ХХ -->
-        <script>
+        //Ошибка проекта 13 
         document.addEventListener('DOMContentLoaded', function() {
-const errorElement = document.getElementById('ErrorGame');
-    
-    if (errorElement) {
-        errorElement.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Вам не доступен проект 12 (новая игра)');
+            const errorElement = document.getElementById('ErrorGame');
+                
+            if (errorElement) {
+                errorElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Вам не доступен проект 13 (новая игра)');
+                });
+            }
         });
-    }
-});
     </script>
     
 </body>

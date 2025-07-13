@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+<html lang="ru"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Крипто-майнинг ферма</title>
@@ -159,12 +157,12 @@
     <h1>Крипто-майнинг ферма PRO</h1>
     
     <div class="stats">
-        <div class="crypto-count">Криптовалюта: <span id="crypto">0</span></div>
+        <div class="crypto-count">Криптовалюта: <span id="crypto">0.00</span></div>
         <div class="mining-speed">Скорость майнинга: 1 крипта за <span id="mining-time">60.0</span> сек</div>
         <div class="mining-animation">
-            <div id="mining-text">⛏️ Майнинг не запущен</div>
+            <div id="mining-text">⛏️ Майнинг...</div>
             <div class="progress-bar">
-                <div class="progress" id="mining-progress"></div>
+                <div class="progress" id="mining-progress" style="width: 0%;"></div>
             </div>
         </div>
     </div>
@@ -172,16 +170,12 @@
     <div class="offline-mining">
         <h3>Оффлайн майнинг</h3>
         <p>Разблокируйте возможность майнить в оффлайне (доход на 65% меньше)</p>
-        <button id="offline-upgrade-btn" class="offline-btn" disabled>
-            Разблокировать за 150 крипты
-        </button>
-        <p id="offline-status">Статус: не разблокировано</p>
+        <button id="offline-upgrade-btn" class="offline-btn" disabled>Разблокировать за 150 крипты</button>
+        <p id="offline-status" style="color: rgb(255, 85, 85);">Статус: не разблокировано</p>
     </div>
     
     <h2>Улучшения</h2>
-    <div class="upgrades" id="upgrades-container">
-        <!-- Улучшения будут добавлены через JavaScript -->
-    </div>
+    <div class="upgrades" id="upgrades-container"></div>
     
     <div class="save-info">
         Прогресс автоматически сохраняется при закрытии страницы
@@ -195,6 +189,7 @@
             minMiningTime: 13.5, // минимальное время майнинга (сек)
             isMining: false,
             progressInterval: null,
+            currentProgress: 0,
             lastUpdate: Date.now(),
             offlineMiningUnlocked: false,
             upgrades: [
@@ -320,53 +315,65 @@
         
         // Сохранение игры
         function saveGame() {
-            const saveData = {
-                crypto: game.crypto,
-                miningTime: game.miningTime,
-                upgrades: game.upgrades.map(upgrade => ({
-                    id: upgrade.id,
-                    cost: upgrade.cost,
-                    owned: upgrade.owned
-                })),
-                lastUpdate: Date.now(),
-                offlineMiningUnlocked: game.offlineMiningUnlocked
-            };
-            localStorage.setItem('cryptoMiningSave', JSON.stringify(saveData));
+            try {
+                const saveData = {
+                    crypto: game.crypto,
+                    miningTime: game.miningTime,
+                    currentProgress: game.currentProgress,
+                    upgrades: game.upgrades.map(upgrade => ({
+                        id: upgrade.id,
+                        cost: upgrade.cost,
+                        owned: upgrade.owned
+                    })),
+                    lastUpdate: Date.now(),
+                    offlineMiningUnlocked: game.offlineMiningUnlocked
+                };
+                localStorage.setItem('cryptoMiningSave', JSON.stringify(saveData));
+            } catch (e) {
+                console.error("Ошибка сохранения игры:", e);
+            }
         }
         
         // Загрузка игры
         function loadGame() {
-            const saveData = localStorage.getItem('cryptoMiningSave');
-            if (saveData) {
-                const parsed = JSON.parse(saveData);
-                
-                game.crypto = parsed.crypto || 0;
-                game.miningTime = parsed.miningTime || 60.0;
-                game.lastUpdate = parsed.lastUpdate || Date.now();
-                game.offlineMiningUnlocked = parsed.offlineMiningUnlocked || false;
-                
-                // Восстанавливаем улучшения
-                parsed.upgrades?.forEach(savedUpgrade => {
-                    const upgrade = game.upgrades.find(u => u.id === savedUpgrade.id);
-                    if (upgrade) {
-                        upgrade.cost = savedUpgrade.cost || upgrade.baseCost;
-                        upgrade.owned = savedUpgrade.owned || 0;
-                    }
-                });
-                
-                // Рассчитываем оффлайн-доход
-                if (game.offlineMiningUnlocked) {
-                    const now = Date.now();
-                    const offlineTime = (now - game.lastUpdate) / 1000; // в секундах
-                    if (offlineTime > 0) {
-                        const cryptoPerSecond = (1 / game.miningTime) * 0.35; // 65% меньше
-                        const offlineEarnings = offlineTime * cryptoPerSecond;
-                        if (offlineEarnings > 0.01) { // Показываем только если есть значимый доход
-                            game.crypto += offlineEarnings;
-                            alert(`Вы заработали ${offlineEarnings.toFixed(2)} крипты в оффлайне! (65% от обычного дохода)`);
+            try {
+                const saveData = localStorage.getItem('cryptoMiningSave');
+                if (saveData) {
+                    const parsed = JSON.parse(saveData);
+                    
+                    game.crypto = parsed.crypto || 0;
+                    game.miningTime = parsed.miningTime || 60.0;
+                    game.currentProgress = parsed.currentProgress || 0;
+                    game.lastUpdate = parsed.lastUpdate || Date.now();
+                    game.offlineMiningUnlocked = parsed.offlineMiningUnlocked || false;
+                    
+                    // Восстанавливаем улучшения
+                    parsed.upgrades?.forEach(savedUpgrade => {
+                        const upgrade = game.upgrades.find(u => u.id === savedUpgrade.id);
+                        if (upgrade) {
+                            upgrade.cost = savedUpgrade.cost || upgrade.baseCost;
+                            upgrade.owned = savedUpgrade.owned || 0;
+                        }
+                    });
+                    
+                    // Рассчитываем оффлайн-доход
+                    if (game.offlineMiningUnlocked) {
+                        const now = Date.now();
+                        const offlineTime = Math.min((now - game.lastUpdate) / 1000, 86400); // Максимум 24 часа
+                        if (offlineTime > 0) {
+                            const cryptoPerSecond = (1 / game.miningTime) * 0.35;
+                            const offlineEarnings = offlineTime * cryptoPerSecond;
+                            if (offlineEarnings > 0.01) {
+                                game.crypto += offlineEarnings;
+                                alert(`Вы заработали ${offlineEarnings.toFixed(2)} крипты в оффлайне! (65% от обычного дохода)`);
+                            }
                         }
                     }
                 }
+            } catch (e) {
+                console.error("Ошибка загрузки игры:", e);
+                // Сбрасываем игру при ошибке загрузки
+                localStorage.removeItem('cryptoMiningSave');
             }
         }
         
@@ -376,6 +383,12 @@
             updateUI();
             renderUpgrades();
             updateOfflineMiningUI();
+            
+            // Восстанавливаем прогресс майнинга
+            if (game.currentProgress > 0) {
+                miningProgressElement.style.width = `${game.currentProgress}%`;
+            }
+            
             startMining();
             
             // Автосохранение каждые 30 секунд
@@ -392,13 +405,6 @@
         function updateUI() {
             cryptoElement.textContent = game.crypto.toFixed(2);
             miningTimeElement.textContent = game.miningTime.toFixed(1);
-            
-            // Обновляем кнопки улучшений
-            document.querySelectorAll('.buy-btn').forEach(btn => {
-                const upgradeId = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
-                const upgrade = game.upgrades.find(u => u.id === upgradeId);
-                btn.disabled = game.crypto < upgrade.cost;
-            });
             
             // Обновляем кнопку оффлайн майнинга
             offlineUpgradeBtn.disabled = game.crypto < 150 || game.offlineMiningUnlocked;
@@ -471,10 +477,16 @@
             if (game.crypto >= upgrade.cost) {
                 game.crypto -= upgrade.cost;
                 upgrade.owned += 1;
-                upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.5, upgrade.owned)); // Увеличиваем стоимость
+                upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.5, upgrade.owned));
+                
+                // Сохраняем текущий прогресс перед обновлением
+                const currentProgress = game.currentProgress;
                 
                 // Применяем эффект улучшения
                 applyUpgradeEffect(upgrade);
+                
+                // Восстанавливаем прогресс
+                game.currentProgress = currentProgress * (game.miningTime / (game.miningTime + upgrade.timeReduction));
                 
                 updateUI();
                 renderUpgrades();
@@ -484,33 +496,25 @@
         
         // Применение эффекта улучшения
         function applyUpgradeEffect(upgrade) {
-            let baseTime = 60.0; // Начальное время
-            
-            // Сначала сбрасываем время до базового
+            let baseTime = 60.0;
             game.miningTime = baseTime;
             
-            // Применяем все улучшения по порядку
             game.upgrades.forEach(u => {
                 if (u.id === 'overclock') {
-                    // Разгон применяется ко всем картам
                     for (let i = 0; i < u.owned; i++) {
-                        game.miningTime *= 0.9; // Уменьшаем время на 10%
+                        game.miningTime *= 0.9;
                     }
                 } else if (u.id === 'cooling') {
-                    // Охлаждение позволяет разогнать еще сильнее
                     for (let i = 0; i < u.owned; i++) {
-                        game.miningTime *= 0.85; // Уменьшаем время на 15%
+                        game.miningTime *= 0.85;
                     }
                 } else if (u.timeReduction > 0) {
-                    // Обычные видеокарты
                     game.miningTime -= u.timeReduction * u.owned;
                 }
             });
             
-            // Не даем времени стать меньше минимального
             game.miningTime = Math.max(game.miningTime, game.minMiningTime);
             
-            // Перезапускаем майнинг с новыми параметрами
             if (game.isMining) {
                 stopMining();
                 startMining();
@@ -524,15 +528,14 @@
             game.isMining = true;
             miningTextElement.textContent = "⛏️ Майнинг...";
             
-            let progress = 0;
-            const progressStep = 100 / (game.miningTime * 10); // Обновляем прогресс каждые 0.1 сек
+            const progressStep = 100 / (game.miningTime * 10);
             
             game.progressInterval = setInterval(() => {
-                progress += progressStep;
-                miningProgressElement.style.width = `${Math.min(progress, 100)}%`;
+                game.currentProgress += progressStep;
+                miningProgressElement.style.width = `${Math.min(game.currentProgress, 100)}%`;
                 
-                if (progress >= 100) {
-                    progress = 0;
+                if (game.currentProgress >= 100) {
+                    game.currentProgress = 0;
                     miningProgressElement.style.width = '0%';
                     game.crypto += 1;
                     updateUI();
@@ -549,7 +552,6 @@
             clearInterval(game.progressInterval);
             game.isMining = false;
             miningTextElement.textContent = "⛏️ Майнинг не запущен";
-            miningProgressElement.style.width = '0%';
         }
         
         // Автоматически начать майнинг при загрузке

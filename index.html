@@ -252,6 +252,15 @@
             transform: translateY(-6px);
         }
 
+        .social-links a.donate:hover {
+            background: rgba(255, 153, 0, 0.8);
+            transform: translateY(-6px);
+        }
+
+        .social-links a.twitch:hover {
+            background: rgba(145, 70, 255);
+            transform: translateY(-6px);
+        }
 
         .container {
             max-width: 1200px;
@@ -307,7 +316,38 @@
         }
 
         .project-info {
+            position: relative;
             padding: 1.5rem;
+        }
+
+        .Sdwfc851 {
+            position: absolute;
+            top: 0.5rem;
+            right: 1.5rem;
+            padding: .125rem .25rem;
+            border-radius: .25rem;
+            font-size: .625rem;
+            font-weight: 500;
+            line-height: 1;
+            color: var(--lighter);
+            background-color: #4285f4; /* Синий цвет, ассоциирующийся с технологиями/ПК */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .testeram {
+            position: absolute;
+            top: 0.5rem;
+            right: 1.5rem;
+            padding: .125rem .25rem;
+            border-radius: .25rem;
+            font-size: .625rem;
+            font-weight: 500;
+            line-height: 1;
+            color: var(--lighter);
+            background-color: #ff0000; /* Синий цвет, ассоциирующийся с технологиями/ПК */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1;
         }
 
         .project-title {
@@ -409,6 +449,73 @@
             color: white;
         }
 
+        /*кастомная ошибка*/
+        .custom-alert-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    
+    .custom-alert-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    .custom-alert {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .custom-alert-overlay.active .custom-alert {
+        transform: translateY(0);
+    }
+    
+    .custom-alert h3 {
+        color: var(--lighter);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .custom-alert p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+    }
+    
+    .custom-alert-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+    
+    .custom-alert-btn:hover {
+        background: #7a4fdf;
+        transform: translateY(-2px);
+    }
+    /*-----*/
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -457,6 +564,10 @@
                     <a href="https://t.me/klubflorika" title="TGK" class="TGK" target="_blank"> <img src="./IMG/KF.png" alt="TGK" style="width: 100%; border-radius: 100px;"> </a>
                     <a href="https://vk.com/Kirill_Florik" title="VK" class="VK" target="_blank"><i class="fab fa-vk"></i> </a>
                     <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> <i class="fab fa-telegram"></i> </a>
+                    <a href="https://www.donationalerts.com/r/kirill_florik_twitch" title="поддержи меня донатом пж" class="donate" target="_blank"> <svg width="20" height="20" viewBox="0 0 20 20" style="fill: white;">
+                                                                                                                                                        <path d="M9.87 11.318H8.804a.23.23 0 0 1-.164-.066.188.188 0 0  1-.056-.154l.095-.977c.009-.104.104-.184.219-.184h1.068c.063 0 .121.024.164.066a.19.19 0 0 1 .056.154l-.095.977c-.009.104-.105.184-.22.184zm.172-1.914H8.954a.212.212 0 0 1-.2-.13.219.219 0 0 1-.018-.083l.296-3.302a.218.218 0 0 1 .074-.135.213.213 0 0 1 .144-.052h1.088c.12 0 .218.095.218.212L10.25 9.22a.214.214 0 0 1-.209.185zm6.399-3.85-2.819-3.32A.666.666 0 0 0 13.117 2h-8.44a.658.658 0 0 0-.446.172.674.674 0 0 0-.216.43L3.003 14.24a.674.674 0 0 0 .394.671.66.66 0 0 0 .267.057h1.658L5.07 18l3.26-3.03h3.702a.66.66 0 0 0 .463-.189l3.478-3.406a.671.671 0 0 0 .2-.423l.425-4.906a.675.675 0 0 0-.157-.493zm-2.578 4.462a.671.671 0 0 1-.199.425l-2.014 1.934a.66.66 0 0 1-.459.184H6.266a.666.666 0 0 1-.487-.22.677.677 0 0 1-.175-.507l.597-6.814a.674.674 0 0 1 .216-.43.658.658 0 0 1 .445-.172h5.01a.66.66 0 0 1 .5.231l1.59 1.852a.67.67 0 0 1 .171.489l-.27 3.028z"></path>
+                                                                                                                                                            </svg>  </a>
+                     <a href="https://www.twitch.tv/kirill_florik" title="twitch" class="twitch" target="_blank"> <i class="fab fa-twitch"></i> </a>
                 </div>
             </div>
         </header>
@@ -471,6 +582,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Cat-clicker.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">cat-clicker</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Кликай котиков и получи больше всех кликов, будь лучше!</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/cat-clicker" class="project-link play-link" target="_blank">Играть</a>
@@ -483,6 +595,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Thim.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">thimbles</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Угадай где шарик и набери больше всего очков</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/thimbles" class="project-link play-link" target="_blank">Играть</a>
@@ -495,6 +608,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Змейка.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Змейка</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк</div>
                         <p class="project-description">Стандартная игра змейка(доступ с пк)</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/snake" class="project-link play-link" target="_blank">Играть</a>
@@ -507,6 +621,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Прив.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">hello</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">простой фон с красивым переливающимся текстом</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/hello" class="project-link play-link" target="_blank">Смотреть</a>
@@ -519,6 +634,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Работа\ для\ подростков.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Заработок для подростков</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Найди для себя работу, не будь зависим от родителей</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/sell/" class="project-link play-link" target="_blank">Читать</a>
@@ -531,6 +647,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Крестики\ нолики.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Tic-Tac-Toe</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">игра с другом в крестики нолики на поле 3х3</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/tic-tac" class="project-link play-link" target="_blank">Играть</a>
@@ -543,6 +660,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Космо\ игра.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">space-memory-game</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Игра на память</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/space-memory-game" class="project-link play-link" target="_blank">Играть</a>
@@ -555,6 +673,7 @@
                     <div class="project-image" style="background-image: url('./IMG/BJ.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">BlackJack</h3>
+                        <div class="Sdwfc851 monoforum-badge">ОБТ 21.03</div>
                         <p class="project-description">Азартная игра с ботом, играй с игровой валютой без доната</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/BJ/" class="project-link play-link" target="_blank">Играть</a>
@@ -567,6 +686,7 @@
                     <div class="project-image" style="background-image: url('./IMG/XSS.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">XSS инъекция(белый хакер)</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Пройди все уровни и докажи что ты должен быть белым хакером! *сделано Chat'om GPT*</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/injection/" class="project-link play-link" target="_blank">Играть</a>
@@ -579,6 +699,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Твой\ выбор\ играть\ в\ самп.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Твой выбор играть в samp</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Найди для себя подхождящий проект для игры в самп</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.GitHub.io/samp" class="project-link play-link" target="_blank">Читать</a>
@@ -591,6 +712,7 @@
                     <div class="project-image" style="background-image: url('./IMG/Сервак\ в\ самп.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Russia.RPG</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Сервер в самп. Установи лаунчер как на пк так и на мобилу. Вся инфа там</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/russia.rpg/" class="project-link play-link" target="_blank">Читать</a>
@@ -603,6 +725,7 @@
                     <div class="project-image" style="background-image: url('./IMG/det.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Детектив: Тайна особняка Блэквуда</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">(есть какой то баг то пиши мне <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> Kirill_Florik</a>)</p>
                         <div class="project-links">
                             <a href="https://kirill-fe.github.io/detective/" class="project-link play-link" target="_blank">Играть</a>
@@ -615,9 +738,10 @@
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
+                        <div class="testeram monoforum-badge">доступ тестерам</div>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" id="ErrorGame" target="_blank">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
@@ -726,6 +850,14 @@
         </footer>
     </div>
 
+    <div class="custom-alert-overlay" id="customAlert">
+    <div class="custom-alert">
+        <h3>Доступ ограничен</h3>
+        <p>Вам не доступен проект 13 (новая игра)</p>
+        <button class="custom-alert-btn" id="customAlertClose">Понятно</button>
+    </div>
+</div>
+
     <script>
         // Обработка загрузки страницы
         document.addEventListener('DOMContentLoaded', () => {
@@ -804,18 +936,40 @@
                 });
             });
         });
-
-        //Ошибка проекта 13 
-        document.addEventListener('DOMContentLoaded', function() {
-            const errorElement = document.getElementById('ErrorGame');
-                
-            if (errorElement) {
-                errorElement.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('Вам не доступен проект 13 (новая игра)');
-                });
+        //кастом ошибка
+        function showCustomAlert(message, title = 'Уведомление') {
+        const alertOverlay = document.getElementById('customAlert');
+        const alertBox = alertOverlay.querySelector('.custom-alert');
+        
+        alertBox.querySelector('h3').textContent = title;
+        alertBox.querySelector('p').textContent = message;
+        
+        alertOverlay.classList.add('active');
+        
+        // Закрытие по кнопке
+        document.getElementById('customAlertClose').onclick = function() {
+            alertOverlay.classList.remove('active');
+        };
+        
+        // Закрытие по клику вне окна
+        alertOverlay.onclick = function(e) {
+            if (e.target === alertOverlay) {
+                alertOverlay.classList.remove('active');
             }
-        });
+        };
+    }
+    
+    // Обновите обработчик для проекта 13
+    document.addEventListener('DOMContentLoaded', function() {
+        const errorElement = document.getElementById('ErrorGame');
+            
+        if (errorElement) {
+            errorElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                showCustomAlert('Вам не доступен проект 13 (новая игра)', 'Доступ ограничен');
+            });
+        }
+    });
     </script>
     
 </body>

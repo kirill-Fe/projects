@@ -301,7 +301,7 @@
         .project-image {
             height: 180px;
             background-size: cover;
-          background-position: center;
+            background-position: center;
             position: relative;
         }
 
@@ -330,7 +330,7 @@
             font-weight: 500;
             line-height: 1;
             color: var(--lighter);
-            background-color: #4285f4; /* Синий цвет, ассоциирующийся с технологиями/ПК */
+            background-color: #4285f4;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 1;
         }
@@ -345,7 +345,7 @@
             font-weight: 500;
             line-height: 1;
             color: var(--lighter);
-            background-color: #ff0000; /* Синий цвет, ассоциирующийся с технологиями/ПК */
+            background-color: #ff0000;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 1;
         }
@@ -451,71 +451,118 @@
 
         /*кастомная ошибка*/
         .custom-alert-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 99999;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
-    
-    .custom-alert-overlay.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-    
-    .custom-alert {
-        background: var(--card-bg);
-        border-radius: 12px;
-        padding: 2rem;
-        max-width: 400px;
-        width: 90%;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        transform: translateY(20px);
-        transition: transform 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .custom-alert-overlay.active .custom-alert {
-        transform: translateY(0);
-    }
-    
-    .custom-alert h3 {
-        color: var(--lighter);
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-    }
-    
-    .custom-alert p {
-        color: var(--text-secondary);
-        margin-bottom: 2rem;
-    }
-    
-    .custom-alert-btn {
-        background: var(--primary);
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 6px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 1rem;
-    }
-    
-    .custom-alert-btn:hover {
-        background: #7a4fdf;
-        transform: translateY(-2px);
-    }
-    /*-----*/
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .custom-alert-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .custom-alert {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .custom-alert-overlay.active .custom-alert {
+            transform: translateY(0);
+        }
+        
+        .custom-alert h3 {
+            color: var(--lighter);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .custom-alert p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .custom-alert-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .custom-alert-btn:hover {
+            background: #7a4fdf;
+            transform: translateY(-2px);
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: rgba(var(--primary), 0.1);
+        }
+        
+        /* Добавляем класс для скрытых проектов */
+        .project-card.hidden {
+            display: none;
+        }
+
+        /*-----*/
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -548,9 +595,7 @@
         <div class="loader-text">Загрузка...</div>
     </div>
 
-    <!-- Основной контент -->
     <div class="content">
-        <!-- Переключатель темы -->
         <div class="theme-switcher" id="themeSwitcher">
             <div class="theme-icon active" data-theme="dark">🌙</div>
             <div class="theme-icon" data-theme="light">☀️</div>
@@ -559,304 +604,332 @@
         <header>
             <div class="header-content">
                 <h1>Florik projects</h1>
-                <p class="tagline">игры и статей</p>
+                <p class="tagline">Игры и статьи</p>
                 <div class="social-links">
-                    <a href="https://t.me/klubflorika" title="TGK" class="TGK" target="_blank"> <img src="./IMG/KF.png" alt="TGK" style="width: 100%; border-radius: 100px;"> </a>
-                    <a href="https://vk.com/Kirill_Florik" title="VK" class="VK" target="_blank"><i class="fab fa-vk"></i> </a>
-                    <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> <i class="fab fa-telegram"></i> </a>
-                    <a href="https://www.donationalerts.com/r/kirill_florik_twitch" title="поддержи меня донатом пж" class="donate" target="_blank"> <svg width="20" height="20" viewBox="0 0 20 20" style="fill: white;">
-                                                                                                                                                        <path d="M9.87 11.318H8.804a.23.23 0 0 1-.164-.066.188.188 0 0  1-.056-.154l.095-.977c.009-.104.104-.184.219-.184h1.068c.063 0 .121.024.164.066a.19.19 0 0 1 .056.154l-.095.977c-.009.104-.105.184-.22.184zm.172-1.914H8.954a.212.212 0 0 1-.2-.13.219.219 0 0 1-.018-.083l.296-3.302a.218.218 0 0 1 .074-.135.213.213 0 0 1 .144-.052h1.088c.12 0 .218.095.218.212L10.25 9.22a.214.214 0 0 1-.209.185zm6.399-3.85-2.819-3.32A.666.666 0 0 0 13.117 2h-8.44a.658.658 0 0 0-.446.172.674.674 0 0 0-.216.43L3.003 14.24a.674.674 0 0 0 .394.671.66.66 0 0 0 .267.057h1.658L5.07 18l3.26-3.03h3.702a.66.66 0 0 0 .463-.189l3.478-3.406a.671.671 0 0 0 .2-.423l.425-4.906a.675.675 0 0 0-.157-.493zm-2.578 4.462a.671.671 0 0 1-.199.425l-2.014 1.934a.66.66 0 0 1-.459.184H6.266a.666.666 0 0 1-.487-.22.677.677 0 0 1-.175-.507l.597-6.814a.674.674 0 0 1 .216-.43.658.658 0 0 1 .445-.172h5.01a.66.66 0 0 1 .5.231l1.59 1.852a.67.67 0 0 1 .171.489l-.27 3.028z"></path>
-                                                                                                                                                            </svg>  </a>
-                     <a href="https://www.twitch.tv/kirill_florik" title="twitch" class="twitch" target="_blank"> <i class="fab fa-twitch"></i> </a>
+                    <a href="https://t.me/klubflorika" title="TGK" class="TGK" target="_blank" rel="noopener noreferrer"> 
+                        <img src="./IMG/KF.png" alt="TGK" style="width: 100%; border-radius: 100px;"> 
+                    </a>
+                    <a href="https://vk.com/Kirill_Florik" title="VK" class="VK" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-vk"></i> 
+                    </a>
+                    <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank" rel="noopener noreferrer"> 
+                        <i class="fab fa-telegram"></i> 
+                    </a>
+                    <a href="https://www.donationalerts.com/r/kirill_florik_twitch" title="поддержи меня донатом пж" class="donate" target="_blank" rel="noopener noreferrer"> 
+                        <svg width="20" height="20" viewBox="0 0 20 20" style="fill: white;">
+                            <path d="M9.87 11.318H8.804a.23.23 0 0 1-.164-.066.188.188 0 0  1-.056-.154l.095-.977c.009-.104.104-.184.219-.184h1.068c.063 0 .121.024.164.066a.19.19 0 0 1 .056.154l-.095.977c-.009.104-.105.184-.22.184zm.172-1.914H8.954a.212.212 0 0 1-.2-.13.219.219 0 0 1-.018-.083l.296-3.302a.218.218 0 0 1 .074-.135.213.213 0 0 1 .144-.052h1.088c.12 0 .218.095.218.212L10.25 9.22a.214.214 0 0 1-.209.185zm6.399-3.85-2.819-3.32A.666.666 0 0 0 13.117 2h-8.44a.658.658 0 0 0-.446.172.674.674 0 0 0-.216.43L3.003 14.24a.674.674 0 0 0 .394.671.66.66 0 0 0 .267.057h1.658L5.07 18l3.26-3.03h3.702a.66.66 0 0 0 .463-.189l3.478-3.406a.671.671 0 0 0 .2-.423l.425-4.906a.675.675 0 0 0-.157-.493zm-2.578 4.462a.671.671 0 0 1-.199.425l-2.014 1.934a.66.66 0 0 1-.459.184H6.266a.666.666 0 0 1-.487-.22.677.677 0 0 1-.175-.507l.597-6.814a.674.674 0 0 1 .216-.43.658.658 0 0 1 .445-.172h5.01a.66.66 0 0 1 .5.231l1.59 1.852a.67.67 0 0 1 .171.489l-.27 3.028z"></path>
+                        </svg>  
+                    </a>
+                    <a href="https://www.twitch.tv/kirill_florik" title="twitch" class="twitch" target="_blank" rel="noopener noreferrer"> 
+                        <i class="fab fa-twitch"></i> 
+                    </a>
                 </div>
             </div>
         </header>
 
         <div class="container">
             <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">Проекты</h2>
+
+            <!--фильтры -->
+            <div class="filters-container" id="filtersContainer">
+                <div class="filter-group">
+                    <div class="filter-group-title">Платформы:</div>
+                    <button class="filter-btn active" data-filter-type="platform" data-filter-value="all">Все</button>
+                    <button class="filter-btn" data-filter-type="platform" data-filter-value="pc-mobile">ПК/Мобила</button>
+                    <button class="filter-btn" data-filter-type="platform" data-filter-value="pc">Только ПК</button>
+                    <button class="filter-btn" data-filter-type="platform" data-filter-value="obt">ОБТ</button>
+                    <button class="filter-btn" data-filter-type="platform" data-filter-value="testers">Тестерам</button>
+                </div>
+                
+                <div class="filter-group">
+                    <div class="filter-group-title">Тип контента:</div>
+                    <button class="filter-btn active" data-filter-type="content" data-filter-value="all">Все</button>
+                    <button class="filter-btn" data-filter-type="content" data-filter-value="games">Игры</button>
+                    <button class="filter-btn" data-filter-type="content" data-filter-value="articles">Статьи</button>
+                    <button class="filter-btn" data-filter-type="content" data-filter-value="view">Просмотр</button>
+                </div>
+            </div>
             
             <div class="projects-grid" id="projectsGrid">
-              
                 <!-- Проект 1 -->
-                <div class="project-card">
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('./IMG/Cat-clicker.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">cat-clicker</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Кликай котиков и получи больше всех кликов, будь лучше!</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/cat-clicker" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/cat-clicker" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 2 -->
-                <div class="project-card">
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('./IMG/Thim.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">thimbles</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Угадай где шарик и набери больше всего очков</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/thimbles" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/thimbles" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 3 -->
-                <div class="project-card">
+                <div class="project-card" data-platform="pc" data-content="games">
                     <div class="project-image" style="background-image: url('./IMG/Змейка.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Змейка</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк</div>
-                        <p class="project-description">Стандартная игра змейка(доступ с пк)</p>
+                        <p class="project-description">Стандартная игра змейка (доступ с пк)</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/snake" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/snake" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 4 -->
-                <div class="project-card">
+                <div class="project-card" data-platform="pc-mobile" data-content="view">
                     <div class="project-image" style="background-image: url('./IMG/Прив.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">hello</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
-                        <p class="project-description">простой фон с красивым переливающимся текстом</p>
+                        <p class="project-description">Простой фон с красивым переливающимся текстом</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/hello" class="project-link play-link" target="_blank">Смотреть</a>
+                            <a href="https://kirill-fe.github.io/hello" class="project-link play-link" target="_blank" rel="noopener noreferrer">Смотреть</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 5 -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('./IMG/Работа\ для\ подростков.png');"></div>
+                <div class="project-card" data-platform="pc-mobile" data-content="articles">
+                    <div class="project-image" style="background-image: url('./IMG/Работа%20для%20подростков.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Заработок для подростков</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Найди для себя работу, не будь зависим от родителей</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/sell/" class="project-link play-link" target="_blank">Читать</a>
+                            <a href="https://kirill-fe.github.io/sell/" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 6 -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('./IMG/Крестики\ нолики.png');"></div>
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                    <div class="project-image" style="background-image: url('./IMG/Крестики%20нолики.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Tic-Tac-Toe</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
-                        <p class="project-description">игра с другом в крестики нолики на поле 3х3</p>
+                        <p class="project-description">Игра с другом в крестики нолики на поле 3х3</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/tic-tac" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/tic-tac" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
-              
+
                 <!-- Проект 7 -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('./IMG/Космо\ игра.png');"></div>
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                    <div class="project-image" style="background-image: url('./IMG/Космо%20игра.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">space-memory-game</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Игра на память</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/space-memory-game" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/space-memory-game" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 8 -->
-                <div class="project-card">
+                <div class="project-card" data-platform="obt" data-content="games">
                     <div class="project-image" style="background-image: url('./IMG/BJ.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">BlackJack</h3>
-                        <div class="Sdwfc851 monoforum-badge">ОБТ 21.03.25</div>
+                        <div class="Sdwfc851 monoforum-badge">ОБТ 21.03</div>
                         <p class="project-description">Азартная игра с ботом, играй с игровой валютой без доната</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/BJ/" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/BJ/" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 9 -->
-                <div class="project-card">
+                <!-- Проект 9 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('./IMG/XSS.png');"></div>
                     <div class="project-info">
-                        <h3 class="project-title">XSS инъекция(белый хакер)</h3>
+                        <h3 class="project-title">XSS инъекция (белый хакер)</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Пройди все уровни и докажи что ты должен быть белым хакером! *сделано Chat'om GPT*</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/injection/" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/injection/" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 10 -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('./IMG/Твой\ выбор\ играть\ в\ самп.png');"></div>
+                <!-- Проект 10 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="articles">
+                    <div class="project-image" style="background-image: url('./IMG/Твой%20выбор%20играть%20в%20самп.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Твой выбор играть в samp</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
-                        <p class="project-description">Найди для себя подхождящий проект для игры в самп</p>
+                        <p class="project-description">Найди для себя подходящий проект для игры в самп</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.GitHub.io/samp" class="project-link play-link" target="_blank">Читать</a>
+                            <a href="https://kirill-fe.GitHub.io/samp" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 11 -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('./IMG/Сервак\ в\ самп.png');"></div>
+                <!-- Проект 11 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="articles">
+                    <div class="project-image" style="background-image: url('./IMG/Сервак%20в%20самп.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Russia.RPG</h3>
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Сервер в самп. Установи лаунчер как на пк так и на мобилу. Вся инфа там</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/russia.rpg/" class="project-link play-link" target="_blank">Читать</a>
+                            <a href="https://kirill-fe.github.io/russia.rpg/" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 12 -->
-                <div class="project-card">
+                <!-- Проект 12 -->
+                <div class="project-card" data-platform="obt" data-content="games">
                     <div class="project-image" style="background-image: url('./IMG/det.png');"></div>
                     <div class="project-info">
                         <h3 class="project-title">Детектив: Тайна особняка Блэквуда</h3>
-                        <div class="Sdwfc851 monoforum-badge">ОБТ 28.06.25</div>
-                        <p class="project-description">(есть какой то баг то пиши мне <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank"> Kirill_Florik</a>)</p>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
+                        <p class="project-description">(есть какой-то баг - пиши мне <a href="https://t.me/Kirill_Florik" title="Telegram" class="TG" target="_blank" rel="noopener noreferrer">Kirill_Florik</a>)</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/detective/" class="project-link play-link" target="_blank">Играть</a>
+                            <a href="https://kirill-fe.github.io/detective/" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 13 -->
-                <div class="project-card">
+                <!-- Проект 13 -->
+                <div class="project-card" data-platform="testers" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <div class="testeram monoforum-badge">доступ тестерам</div>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" id="ErrorGame" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" id="ErrorGame">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 14 -->
-                <div class="project-card">
+                <!-- Проект 14 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 15 -->
-                <div class="project-card">
+                <!-- Проект 15 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                                          <!-- Проект 16 -->
-                <div class="project-card">
+                <!-- Проект 16 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 17 -->
-                <div class="project-card">
+                <!-- Проект 17 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 18 -->
-                <div class="project-card">
+                <!-- Проект 18 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 19 -->
-                <div class="project-card">
+                <!-- Проект 19 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 20 -->
-                <div class="project-card">
+                <!-- Проект 20 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
-                          <!-- Проект 21 -->
-                <div class="project-card">
+                <!-- Проект 21 -->
+                <div class="project-card" data-platform="pc-mobile" data-content="games">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
-              
             </div>
         </div>
 
         <footer>
-            <p>© 2025 <a href="https://t.me/Kirill_Florik" title="TG">Kirill_Florik</a></p>
+            <p>© 2025 <a href="https://t.me/Kirill_Florik" title="TG" target="_blank" rel="noopener noreferrer">Kirill_Florik</a></p>
         </footer>
     </div>
 
     <div class="custom-alert-overlay" id="customAlert">
-    <div class="custom-alert">
-        <h3>Доступ ограничен</h3>
-        <p>Вам не доступен проект 13 (новая игра)</p>
-        <button class="custom-alert-btn" id="customAlertClose">Понятно</button>
+        <div class="custom-alert">
+            <h3>Доступ ограничен</h3>
+            <p>Вам не доступен проект 13 (новая игра)</p>
+            <button class="custom-alert-btn" id="customAlertClose">Понятно</button>
+        </div>
     </div>
-</div>
 
     <script>
         // Обработка загрузки страницы
@@ -877,13 +950,13 @@
                     // Добавляем обработчик прокрутки
                     window.addEventListener('scroll', handleScroll);
                 }, 1000);
-            }, 2500); // Общее время загрузки - 2.5 секунды
+            }, 2500); //время загрузки 2.5 секунды
         });
 
         // Функция для показа первых карточек
         function showInitialCards() {
             const cards = document.querySelectorAll('.project-card');
-            const initialCount = 6; // Количество карточек, которые показываем сразу
+            const initialCount = 3; // Количество карточек, которые показываем сразу
             
             cards.forEach((card, index) => {
                 if (index < initialCount) {
@@ -936,41 +1009,107 @@
                 });
             });
         });
+
         //кастом ошибка
         function showCustomAlert(message, title = 'Уведомление') {
-        const alertOverlay = document.getElementById('customAlert');
-        const alertBox = alertOverlay.querySelector('.custom-alert');
-        
-        alertBox.querySelector('h3').textContent = title;
-        alertBox.querySelector('p').textContent = message;
-        
-        alertOverlay.classList.add('active');
-        
-        // Закрытие по кнопке
-        document.getElementById('customAlertClose').onclick = function() {
-            alertOverlay.classList.remove('active');
-        };
-        
-        // Закрытие по клику вне окна
-        alertOverlay.onclick = function(e) {
-            if (e.target === alertOverlay) {
-                alertOverlay.classList.remove('active');
-            }
-        };
-    }
-    
-    // Обновите обработчик для проекта 13
-    document.addEventListener('DOMContentLoaded', function() {
-        const errorElement = document.getElementById('ErrorGame');
+            const alertOverlay = document.getElementById('customAlert');
+            const alertBox = alertOverlay.querySelector('.custom-alert');
             
-        if (errorElement) {
-            errorElement.addEventListener('click', function(e) {
-                e.preventDefault();
-                showCustomAlert('Вам не доступен проект 13 (новая игра)', 'Доступ ограничен');
-            });
+            alertBox.querySelector('h3').textContent = title;
+            alertBox.querySelector('p').textContent = message;
+            
+            alertOverlay.classList.add('active');
+            
+            // Закрытие по кнопке
+            document.getElementById('customAlertClose').onclick = function() {
+                alertOverlay.classList.remove('active');
+            };
+            
+            // Закрытие по клику вне окна
+            alertOverlay.onclick = function(e) {
+                if (e.target === alertOverlay) {
+                    alertOverlay.classList.remove('active');
+                }
+            };
         }
-    });
+        
+        // Обновите обработчик для проекта 13
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorElement = document.getElementById('ErrorGame');
+                
+            if (errorElement) {
+                errorElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showCustomAlert('Вам не доступен проект 13 (новая игра)', 'Доступ ограничен');
+                });
+            }
+        });
+
+        // Добавляем обработчики для фильтрации
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            // Текущие активные фильтры
+            const activeFilters = {
+                platform: 'all',
+                content: 'all'
+            };
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-filter-type');
+                    const filterValue = this.getAttribute('data-filter-value');
+                    
+                    // Если это та же кнопка, что и активная - ничего не делаем
+                    if (activeFilters[filterType] === filterValue) return;
+                    
+                    // Удаляем активный класс у всех кнопок этой группы
+                    document.querySelectorAll(`.filter-btn[data-filter-type="${filterType}"]`).forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Обновляем активный фильтр
+                    activeFilters[filterType] = filterValue;
+                    
+                    // Применяем фильтры
+                    filterProjects();
+                });
+            });
+            
+            function filterProjects() {
+                projectCards.forEach(card => {
+                    const cardPlatform = card.getAttribute('data-platform');
+                    const cardContent = card.getAttribute('data-content');
+                    
+                    // Проверяем соответствие платформе
+                    const platformMatch = 
+                        activeFilters.platform === 'all' || 
+                        cardPlatform === activeFilters.platform;
+                    
+                    // Проверяем соответствие типу контента
+                    const contentMatch = 
+                        activeFilters.content === 'all' || 
+                        cardContent === activeFilters.content;
+                    
+                    // Показываем/скрываем карточки
+                    if (platformMatch && contentMatch) {
+                        card.classList.remove('hidden');
+                        if (!card.classList.contains('visible')) {
+                            card.classList.add('visible');
+                        }
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Инициализируем фильтры по умолчанию
+            filterProjects();
+        });
     </script>
-    
 </body>
 </html>

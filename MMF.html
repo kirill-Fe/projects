@@ -1028,14 +1028,14 @@
                     const now = Date.now();
                     const offlineTime = Math.min((now - game.lastUpdate) / 1000, 86400); // Максимум 24 часа
                     if (offlineTime > 0) {
-                        const cryptoPerSecond = (1 / game.miningTime) * 0.35;
+                        const cryptoPerSecond = (1 / game.miningTime) * 0.50;
                         const offlineEarnings = offlineTime * cryptoPerSecond;
                         if (offlineEarnings > 0.01) {
                             game.crypto += offlineEarnings;
                             game.totalMined += offlineEarnings;
                             showNotification(
                                 "Оффлайн майнинг", 
-                                `Вы заработали ${offlineEarnings.toFixed(2)} крипты в оффлайне! (35% от обычного дохода)`,
+                                `Вы заработали ${offlineEarnings.toFixed(2)} крипты в оффлайне! (50% от обычного дохода)`,
                                 5000
                             );
                         }
@@ -1109,7 +1109,7 @@
     function updateOfflineMiningUI() {
         if (game.offlineMiningUnlocked) {
             offlineUpgradeBtn.style.display = 'none';
-            offlineStatusElement.textContent = "Статус: разблокировано (доход в оффлайне 35% от обычного)";
+            offlineStatusElement.textContent = "Статус: разблокировано (доход в оффлайне 50% от обычного)";
             offlineStatusElement.className = "offline-status unlocked";
         } else {
             offlineUpgradeBtn.textContent = `Разблокировать за 150 крипты`;
@@ -1128,7 +1128,7 @@
             saveGame();
             showNotification(
                 "Оффлайн майнинг", 
-                "Оффлайн майнинг разблокирован! Теперь вы будете получать 35% от обычного дохода, даже когда игра закрыта.",
+                "Оффлайн майнинг разблокирован! Теперь вы будете получать 50% от обычного дохода, даже когда игра закрыта.",
                 5000
             );
             

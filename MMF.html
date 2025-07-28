@@ -1,561 +1,1365 @@
-<html lang="ru"><head>
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Крипто-майнинг ферма</title>
     <style>
+        .reset-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1001;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .reset-btn:hover {
+            background-color: #ff3333;
+            box-shadow: 0 0 10px rgba(255, 85, 85, 0.5);
+        }
+        
+        :root {
+            --primary-color: #00ffaa;
+            --secondary-color: #ffaa00;
+            --danger-color: #ff5555;
+            --bg-dark: #0a0a1a;
+            --bg-darker: #050510;
+            --card-bg: #151530;
+            --text-light: #e0e0e0;
+            --text-dim: #a0a0a0;
+        }
+        
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #0a0a1a;
-            color: #e0e0e0;
-            max-width: 800px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 255, 170, 0.05) 0%, transparent 20%);
         }
         
         h1 {
-            color: #00ffaa;
+            color: var(--primary-color);
             text-align: center;
-            text-shadow: 0 0 5px #00ffaa;
+            text-shadow: 0 0 10px var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        h1::after {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 10px auto 0;
         }
         
         .stats {
-            background-color: #151530;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+            border: 1px solid #303050;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
         }
         
         .crypto-count {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: #00ffaa;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .mining-speed {
-            margin-top: 10px;
+        .crypto-icon {
+            width: 24px;
+            height: 24px;
         }
         
-        .upgrades {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
+            margin-top: 15px;
         }
         
-        .upgrade {
-            background-color: #151530;
-            padding: 15px;
-            border-radius: 10px;
-            transition: all 0.3s;
-            border: 1px solid #303050;
+        .stat-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
         }
         
-        .upgrade:hover {
-            border-color: #00ffaa;
-            box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
-        }
-        
-        .upgrade-name {
-            font-weight: bold;
-            color: #00ffaa;
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-dim);
             margin-bottom: 5px;
         }
         
-        .upgrade-effect {
-            font-size: 14px;
-            color: #a0a0a0;
-            margin-bottom: 10px;
-        }
-        
-        .upgrade-cost {
+        .stat-value {
             font-weight: bold;
-            color: #ffaa00;
-        }
-        
-        .buy-btn {
-            background-color: #303050;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-        
-        .buy-btn:hover {
-            background-color: #00ffaa;
-            color: #0a0a1a;
-        }
-        
-        .buy-btn:disabled {
-            background-color: #505070;
-            cursor: not-allowed;
-            color: #808080;
+            font-size: 18px;
         }
         
         .mining-animation {
             text-align: center;
-            margin: 20px 0;
+            margin: 30px 0;
             font-size: 24px;
+            position: relative;
+        }
+        
+        .mining-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .mining-effects {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 50px;
+            pointer-events: none;
+        }
+        
+        .coin-particle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10zm0 2a8 8 0 00-8 8 8 8 0 008 8 8 8 0 008-8 8 8 0 00-8-8z"/></svg>');
+            background-size: contain;
+            opacity: 0;
+            animation: float-up 2s ease-out forwards;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
         }
         
         .progress-bar {
             width: 100%;
-            height: 20px;
+            height: 25px;
             background-color: #303050;
-            border-radius: 10px;
-            margin-top: 10px;
+            border-radius: 12px;
+            margin-top: 15px;
             overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
         .progress {
             height: 100%;
-            background-color: #00ffaa;
+            background: linear-gradient(90deg, var(--primary-color), #00ffcc);
             width: 0%;
             transition: width 0.1s;
+            position: relative;
+            overflow: hidden;
         }
         
-        .save-info {
-            text-align: center;
-            margin-top: 20px;
-            color: #a0a0a0;
-            font-size: 14px;
+        .progress::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                          rgba(255,255,255,0.1) 0%, 
+                          rgba(255,255,255,0.3) 50%, 
+                          rgba(255,255,255,0.1) 100%);
+            animation: progress-shine 2s infinite;
         }
         
-        .offline-mining {
-            background-color: #1a1a3a;
-            padding: 15px;
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .upgrades-section {
+            margin-top: 30px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+        }
+        
+        .upgrades-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #303050;
+            padding-bottom: 5px;
+        }
+        
+        .tab-btn {
+            background-color: transparent;
+            color: var(--text-light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            opacity: 0.7;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--card-bg);
+            opacity: 1;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background-color: rgba(0, 255, 170, 0.1);
+            opacity: 0.9;
+        }
+        
+        .upgrades {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .upgrade {
+            background-color: var(--card-bg);
+            padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
-            border: 1px solid #505070;
+            transition: all 0.3s;
+            border: 1px solid #303050;
+            position: relative;
+            overflow: hidden;
         }
         
-        .offline-btn {
-            background-color: #5050a0;
+        .upgrade::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .upgrade:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 170, 0.2);
+            border-color: var(--primary-color);
+        }
+        
+        .upgrade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .upgrade-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .upgrade-level {
+            background-color: rgba(0, 255, 170, 0.2);
+            color: var(--primary-color);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .upgrade-image {
+            width: 100%;
+            height: 120px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .upgrade-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .upgrade-effect {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 15px;
+            min-height: 40px;
+        }
+        
+        .upgrade-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+        
+        .upgrade-stat {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .upgrade-stat-label {
+            color: var(--text-dim);
+        }
+        
+        .upgrade-stat-value {
+            font-weight: bold;
+        }
+        
+        .upgrade-cost {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .buy-btn {
+            background: linear-gradient(135deg, #303050, #404070);
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
-            font-weight: bold;
             transition: all 0.3s;
+            font-weight: bold;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
-        .offline-btn:hover {
-            background-color: #6060c0;
+        .buy-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--primary-color), #00cc88);
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+        }
+        
+        .buy-btn:disabled {
+            background: #505070;
+            cursor: not-allowed;
+            color: #808080;
+        }
+        
+        .buy-btn .icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .offline-mining {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 1px solid #505070;
+            position: relative;
+        }
+        
+        .offline-mining::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #5050a0, #8080ff);
+        }
+        
+        .offline-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .offline-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .offline-btn {
+            background: linear-gradient(135deg, #5050a0, #6060c0);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .offline-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #6060c0, #7070e0);
+            box-shadow: 0 0 15px rgba(80, 80, 160, 0.5);
         }
         
         .offline-btn:disabled {
-            background-color: #303050;
+            background: #303050;
             cursor: not-allowed;
+        }
+        
+        .offline-status {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .offline-status.unlocked {
+            background-color: rgba(0, 255, 170, 0.1);
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .offline-status.locked {
+            background-color: rgba(255, 85, 85, 0.1);
+            color: var(--danger-color);
+            border-left: 3px solid var(--danger-color);
+        }
+        
+        .save-info {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-dim);
+            font-size: 14px;
+            padding: 10px;
+            border-top: 1px solid #303050;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--primary-color);
+            transform: translateX(200%);
+            transition: transform 0.3s;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .achievements {
+            margin-top: 30px;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .achievement {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #303050;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+        
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.2);
+        }
+        
+        .achievement-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 170, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-desc {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        
+        .achievement-reward {
+            font-size: 12px;
+            color: var(--secondary-color);
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .upgrades {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Крипто-майнинг ферма PRO</h1>
+    <button class="reset-btn" id="reset-btn">Начать заново</button>
+    
+    <h1>Крипто-майнинг ферма</h1>
     
     <div class="stats">
-        <div class="crypto-count">Криптовалюта: <span id="crypto">0.00</span></div>
-        <div class="mining-speed">Скорость майнинга: 1 крипта за <span id="mining-time">60.0</span> сек</div>
+        <div class="crypto-count">
+            <svg class="crypto-icon" viewBox="0 0 24 24" fill="gold">
+                <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41-5.64 5.66z"/>
+            </svg>
+            <span id="crypto">0.00</span>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">Скорость майнинга</div>
+                <div class="stat-value" id="mining-speed">1 крипта / 60.0 сек</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Всего добыто</div>
+                <div class="stat-value" id="total-mined">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Уровень</div>
+                <div class="stat-value" id="player-level">1</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Опыт</div>
+                <div class="stat-value" id="player-xp">0/100</div>
+            </div>
+        </div>
+        
         <div class="mining-animation">
-            <div id="mining-text">⛏️ Майнинг...</div>
+            <div class="mining-text" id="mining-text">⛏️ Майнинг...</div>
+            <div class="mining-effects" id="mining-effects"></div>
             <div class="progress-bar">
                 <div class="progress" id="mining-progress" style="width: 0%;"></div>
             </div>
         </div>
     </div>
     
-    <div class="offline-mining">
-        <h3>Оффлайн майнинг</h3>
-        <p>Разблокируйте возможность майнить в оффлайне (доход на 65% меньше)</p>
-        <button id="offline-upgrade-btn" class="offline-btn" disabled>Разблокировать за 150 крипты</button>
-        <p id="offline-status" style="color: rgb(255, 85, 85);">Статус: не разблокировано</p>
+    <div class="upgrades-section">
+        <div class="section-title">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--primary-color)">
+                <path d="M7 2v2h1v14a4 4 0 004 4h1c1.11 0 2-.89 2-2V4h1V2H7m4 14c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+            </svg>
+            Улучшения
+        </div>
+        
+        <div class="upgrades-tabs">
+            <button class="tab-btn active" data-tab="gpu">Видеокарты</button>
+            <button class="tab-btn" data-tab="rigs">Фермы</button>
+            <button class="tab-btn" data-tab="upgrades">Улучшения</button>
+            <button class="tab-btn" data-tab="software">Софт</button>
+        </div>
+        
+        <div class="upgrades" id="upgrades-container"></div>
     </div>
     
-    <h2>Улучшения</h2>
-    <div class="upgrades" id="upgrades-container"></div>
+    <div class="offline-mining">
+        <div class="offline-header">
+            <svg class="offline-icon" viewBox="0 0 24 24" fill="#8080ff">
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>
+            </svg>
+            <h3>Оффлайн майнинг</h3>
+        </div>
+        <p>Разблокируйте возможность майнить в оффлайне (доход на 65% меньше)</p>
+        <button id="offline-upgrade-btn" class="offline-btn" disabled>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
+            </svg>
+            Разблокировать за 150 крипты
+        </button>
+        <div id="offline-status" class="offline-status locked">Статус: не разблокировано</div>
+    </div>
+    
+    <div class="achievements">
+        <div class="section-title">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--secondary-color)">
+                <path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10A10 10 0 012 12 10 10 0 0112 2m0 2a8 8 0 00-8 8c0 2.09.81 4 2.12 5.41L17.41 6.12A7.965 7.965 0 0012 4m0 16a8 8 0 008-8c0-2.09-.81-4-2.12-5.41L6.59 17.88A7.965 7.965 0 0012 20m-2-9h4v2h-4v-2z"/>
+            </svg>
+            Достижения
+        </div>
+        <div class="achievements-grid" id="achievements-container"></div>
+    </div>
     
     <div class="save-info">
-        Прогресс автоматически сохраняется при закрытии страницы
+        Прогресс автоматически сохраняется каждые 30 секунд и при закрытии страницы
     </div>
     
-    <script>
-        // Игровые данные
-        const game = {
-            crypto: 0,
-            miningTime: 60.0, // начальное время майнинга (сек)
-            minMiningTime: 13.5, // минимальное время майнинга (сек)
-            isMining: false,
-            progressInterval: null,
-            currentProgress: 0,
-            lastUpdate: Date.now(),
-            offlineMiningUnlocked: false,
-            upgrades: [
-                {
-                    id: "gtx1050",
-                    name: "GTX 1050",
-                    description: "Базовая видеокарта",
-                    baseCost: 10,
-                    cost: 10,
-                    timeReduction: 5.0,
-                    owned: 0
-                },
-                {
-                    id: "gtx1660",
-                    name: "GTX 1660",
-                    description: "Средняя видеокарта",
-                    baseCost: 50,
-                    cost: 50,
-                    timeReduction: 8.0,
-                    owned: 0
-                },
-                {
-                    id: "rtx2060",
-                    name: "RTX 2060",
-                    description: "Игровая видеокарта",
-                    baseCost: 150,
-                    cost: 150,
-                    timeReduction: 10.0,
-                    owned: 0
-                },
-                {
-                    id: "rtx3060",
-                    name: "RTX 3060",
-                    description: "Новая видеокарта",
-                    baseCost: 300,
-                    cost: 300,
-                    timeReduction: 12.0,
-                    owned: 0
-                },
-                {
-                    id: "rtx3070",
-                    name: "RTX 3070",
-                    description: "Мощная видеокарта",
-                    baseCost: 500,
-                    cost: 500,
-                    timeReduction: 15.0,
-                    owned: 0
-                },
-                {
-                    id: "rtx3080",
-                    name: "RTX 3080",
-                    description: "Профессиональная карта",
-                    baseCost: 800,
-                    cost: 800,
-                    timeReduction: 18.0,
-                    owned: 0
-                },
-                {
-                    id: "rtx3090",
-                    name: "RTX 3090",
-                    description: "Элитная видеокарта",
-                    baseCost: 1200,
-                    cost: 1200,
-                    timeReduction: 22.0,
-                    owned: 0
-                },
-                {
-                    id: "rtx4090",
-                    name: "RTX 4090",
-                    description: "Топовая видеокарта",
-                    baseCost: 2000,
-                    cost: 2000,
-                    timeReduction: 25.0,
-                    owned: 0
-                },
-                {
-                    id: "mining-rig",
-                    name: "Майнинг-риг",
-                    description: "Целая ферма из 6 видеокарт",
-                    baseCost: 5000,
-                    cost: 5000,
-                    timeReduction: 30.0,
-                    owned: 0
-                },
-                {
-                    id: "overclock",
-                    name: "Разгон",
-                    description: "Увеличивает эффективность всех карт на 10%",
-                    baseCost: 3000,
-                    cost: 3000,
-                    timeReduction: 0, // специальный эффект
-                    owned: 0
-                },
-                {
-                    id: "cooling",
-                    name: "Система охлаждения",
-                    description: "Позволяет разогнать карты еще сильнее",
-                    baseCost: 8000,
-                    cost: 8000,
-                    timeReduction: 0, // специальный эффект
-                    owned: 0
-                },
-                {
-                    id: "server-farm",
-                    name: "Серверная ферма",
-                    description: "Промышленный майнинг",
-                    baseCost: 15000,
-                    cost: 15000,
-                    timeReduction: 40.0,
-                    owned: 0
-                }
-            ]
-        };
-        
-        // DOM элементы
-        const cryptoElement = document.getElementById('crypto');
-        const miningTimeElement = document.getElementById('mining-time');
-        const miningTextElement = document.getElementById('mining-text');
-        const miningProgressElement = document.getElementById('mining-progress');
-        const upgradesContainer = document.getElementById('upgrades-container');
-        const offlineUpgradeBtn = document.getElementById('offline-upgrade-btn');
-        const offlineStatusElement = document.getElementById('offline-status');
-        
-        // Сохранение игры
-        function saveGame() {
-            try {
-                const saveData = {
-                    crypto: game.crypto,
-                    miningTime: game.miningTime,
-                    currentProgress: game.currentProgress,
-                    upgrades: game.upgrades.map(upgrade => ({
-                        id: upgrade.id,
-                        cost: upgrade.cost,
-                        owned: upgrade.owned
-                    })),
-                    lastUpdate: Date.now(),
-                    offlineMiningUnlocked: game.offlineMiningUnlocked
-                };
-                localStorage.setItem('cryptoMiningSave', JSON.stringify(saveData));
-            } catch (e) {
-                console.error("Ошибка сохранения игры:", e);
-            }
+    <div class="notification" id="notification">
+        <div class="notification-title" id="notification-title">Уведомление</div>
+        <div class="notification-message" id="notification-message">Сообщение</div>
+    </div>
+    
+<script>
+    // Глобальная функция сброса игры
+    function resetGame() {
+        if (confirm("Вы уверены, что хотите начать игру заново? Весь прогресс будет потерян!")) {
+            localStorage.removeItem('cryptoMiningSave');
+            location.reload();
         }
+    }
+
+    // Добавляем функцию в глобальную область видимости
+    window.resetGame = resetGame;
+
+    // Игровые данные
+    const game = {
+        crypto: 0,
+        totalMined: 0,
+        miningTime: 60.0,
+        minMiningTime: 5.0,
+        isMining: false,
+        progressInterval: null,
+        currentProgress: 0,
+        lastUpdate: Date.now(),
+        offlineMiningUnlocked: false,
+        level: 1,
+        xp: 0,
+        xpToNextLevel: 100,
+        upgrades: [
+            {
+                id: "gtx1050",
+                name: "GTX 1050",
+                description: "Базовая видеокарта для начинающих",
+                baseCost: 10,
+                cost: 10,
+                timeReduction: 5.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/GTX 1050.jpg"
+            },
+            {
+                id: "gtx1660",
+                name: "GTX 1660",
+                description: "Средняя видеокарта с хорошим соотношением цены и производительности",
+                baseCost: 50,
+                cost: 50,
+                timeReduction: 8.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/GTX 1660.jpg"
+            },
+            {
+                id: "rtx2060",
+                name: "RTX 2060",
+                description: "Игровая видеокарта с поддержкой рейтрейсинга",
+                baseCost: 150,
+                cost: 150,
+                timeReduction: 10.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/RTX 2060.jpg"
+            },
+            {
+                id: "rtx3060",
+                name: "RTX 3060",
+                description: "Новая видеокарта с улучшенной архитектурой",
+                baseCost: 300,
+                cost: 300,
+                timeReduction: 12.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/RTX 3060.jpg"
+            },
+            {
+                id: "rtx3070",
+                name: "RTX 3070",
+                description: "Мощная видеокарта для профессионального майнинга",
+                baseCost: 500,
+                cost: 500,
+                timeReduction: 15.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/RTX 3070.jpg"
+            },
+            {
+                id: "rtx3080",
+                name: "RTX 3080",
+                description: "Профессиональная карта с высокой хешрейтом",
+                baseCost: 800,
+                cost: 800,
+                timeReduction: 18.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/RTX 3080.jpg"
+            },
+            {
+                id: "rtx3090",
+                name: "RTX 3090",
+                description: "Элитная видеокарта с максимальной производительностью",
+                baseCost: 1200,
+                cost: 1200,
+                timeReduction: 22.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/RTX 3090.jpg"
+            },
+            {
+                id: "rtx4090",
+                name: "RTX 4090",
+                description: "Топовая видеокарта нового поколения",
+                baseCost: 2000,
+                cost: 2000,
+                timeReduction: 25.0,
+                owned: 0,
+                category: "gpu",
+                image: "./MMF/RTX 4090.jpg"
+            },
+            {
+                id: "mining-rig-6",
+                name: "Майнинг-риг (6 GPU)",
+                description: "Ферма из 6 видеокарт с общей системой охлаждения",
+                baseCost: 5000,
+                cost: 5000,
+                timeReduction: 30.0,
+                owned: 0,
+                category: "rigs",
+                image: "./MMF/Ферма из 6 видеокарт с общей системой охлаждения.jpg"
+            },
+            {
+                id: "mining-rig-12",
+                name: "Майнинг-риг (12 GPU)",
+                description: "Профессиональная ферма с 12 видеокартами",
+                baseCost: 10000,
+                cost: 10000,
+                timeReduction: 50.0,
+                owned: 0,
+                category: "rigs",
+                image: "./MMF/Профессиональная ферма с 12 видеокартами.jpg"
+            },
+            {
+                id: "overclock",
+                name: "Разгон GPU",
+                description: "Увеличивает эффективность всех карт на 10%",
+                baseCost: 3000,
+                cost: 3000,
+                timeReduction: 0,
+                owned: 0,
+                category: "upgrades",
+                image: "./MMF/Разгон GPU.jpg"
+            },
+            {
+                id: "cooling",
+                name: "Система охлаждения",
+                description: "Позволяет разогнать карты еще сильнее (+15% эффективности)",
+                baseCost: 8000,
+                cost: 8000,
+                timeReduction: 0,
+                owned: 0,
+                category: "upgrades",
+                image: "./MMF/Система охлаждения.jpg"
+            },
+            {
+                id: "mining-software",
+                name: "Профессиональный софт",
+                description: "Оптимизированный майнер с улучшенным алгоритмом",
+                baseCost: 4000,
+                cost: 4000,
+                timeReduction: 12.0,
+                owned: 0,
+                category: "software",
+                image: "./MMF/Оптимизированный майнер с улучшенным алгоритмом.jpg"
+            },
+            {
+                id: "server-farm",
+                name: "Серверная ферма",
+                description: "Промышленный майнинг с профессиональным оборудованием",
+                baseCost: 15000,
+                cost: 15000,
+                timeReduction: 40.0,
+                owned: 0,
+                category: "rigs",
+                image: "./MMF/Промышленный майнинг с профессиональным оборудованием.jpg"
+            },
+            {
+                id: "asic-miner",
+                name: "ASIC майнер",
+                description: "Специализированное устройство для майнинга",
+                baseCost: 20000,
+                cost: 20000,
+                timeReduction: 60.0,
+                owned: 0,
+                category: "rigs",
+                image: "./MMF/Специализированное устройство для майнинга.jpg"
+            }
+        ],
+        achievements: [
+            {
+                id: "first-mining",
+                name: "Первый майнинг",
+                description: "Добыта первая криптовалюта",
+                reward: "+10 крипты",
+                unlocked: false,
+                check: () => game.totalMined >= 1
+            },
+            {
+                id: "first-upgrade",
+                name: "Первое улучшение",
+                description: "Куплено первое улучшение",
+                reward: "+20 крипты",
+                unlocked: false,
+                check: () => game.upgrades.some(u => u.owned > 0)
+            },
+            {
+                id: "offline-unlock",
+                name: "Оффлайн майнинг",
+                description: "Разблокирован оффлайн майнинг",
+                reward: "+50 крипты",
+                unlocked: false,
+                check: () => game.offlineMiningUnlocked
+            },
+            {
+                id: "level-5",
+                name: "Опытный майнер",
+                description: "Достигнут 5 уровень",
+                reward: "Увеличивает доход на 5%",
+                unlocked: false,
+                check: () => game.level >= 5
+            },
+            {
+                id: "crypto-1000",
+                name: "Крипто-энтузиаст",
+                description: "Накоплено 1000 криптовалюты",
+                reward: "+100 крипты",
+                unlocked: false,
+                check: () => game.totalMined >= 1000
+            },
+            {
+                id: "all-gpu",
+                name: "Коллекционер GPU",
+                description: "Куплена хотя бы одна карта каждого типа",
+                reward: "+150 крипты",
+                unlocked: false,
+                check: () => {
+                    const gpuIds = ["gtx1050", "gtx1660", "rtx2060", "rtx3060", "rtx3070", "rtx3080", "rtx3090", "rtx4090"];
+                    return gpuIds.every(id => game.upgrades.find(u => u.id === id)?.owned > 0);
+                }
+            }
+        ],
+        activeTab: "gpu"
+    };
+    
+    // DOM элементы
+    const cryptoElement = document.getElementById('crypto');
+    const miningSpeedElement = document.getElementById('mining-speed');
+    const totalMinedElement = document.getElementById('total-mined');
+    const playerLevelElement = document.getElementById('player-level');
+    const playerXpElement = document.getElementById('player-xp');
+    const miningTextElement = document.getElementById('mining-text');
+    const miningProgressElement = document.getElementById('mining-progress');
+    const miningEffectsElement = document.getElementById('mining-effects');
+    const upgradesContainer = document.getElementById('upgrades-container');
+    const offlineUpgradeBtn = document.getElementById('offline-upgrade-btn');
+    const offlineStatusElement = document.getElementById('offline-status');
+    const achievementsContainer = document.getElementById('achievements-container');
+    const notificationElement = document.getElementById('notification');
+    const notificationTitleElement = document.getElementById('notification-title');
+    const notificationMessageElement = document.getElementById('notification-message');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    
+    // Уведомления
+    function showNotification(title, message, duration = 3000) {
+        notificationTitleElement.textContent = title;
+        notificationMessageElement.textContent = message;
+        notificationElement.classList.add('show');
         
-        // Загрузка игры
-        function loadGame() {
-            try {
-                const saveData = localStorage.getItem('cryptoMiningSave');
-                if (saveData) {
-                    const parsed = JSON.parse(saveData);
-                    
-                    game.crypto = parsed.crypto || 0;
-                    game.miningTime = parsed.miningTime || 60.0;
-                    game.currentProgress = parsed.currentProgress || 0;
-                    game.lastUpdate = parsed.lastUpdate || Date.now();
-                    game.offlineMiningUnlocked = parsed.offlineMiningUnlocked || false;
-                    
-                    // Восстанавливаем улучшения
-                    parsed.upgrades?.forEach(savedUpgrade => {
-                        const upgrade = game.upgrades.find(u => u.id === savedUpgrade.id);
-                        if (upgrade) {
-                            upgrade.cost = savedUpgrade.cost || upgrade.baseCost;
-                            upgrade.owned = savedUpgrade.owned || 0;
-                        }
-                    });
-                    
-                    // Рассчитываем оффлайн-доход
-                    if (game.offlineMiningUnlocked) {
-                        const now = Date.now();
-                        const offlineTime = Math.min((now - game.lastUpdate) / 1000, 86400); // Максимум 24 часа
-                        if (offlineTime > 0) {
-                            const cryptoPerSecond = (1 / game.miningTime) * 0.35;
-                            const offlineEarnings = offlineTime * cryptoPerSecond;
-                            if (offlineEarnings > 0.01) {
-                                game.crypto += offlineEarnings;
-                                alert(`Вы заработали ${offlineEarnings.toFixed(2)} крипты в оффлайне! (65% от обычного дохода)`);
-                            }
+        setTimeout(() => {
+            notificationElement.classList.remove('show');
+        }, duration);
+    }
+    
+    // Частицы при майнинге
+    function createMiningParticles() {
+        miningEffectsElement.innerHTML = '';
+        const particleCount = 5 + Math.floor(Math.random() * 5);
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'coin-particle';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 0.5}s`;
+            miningEffectsElement.appendChild(particle);
+        }
+    }
+    
+    // Сохранение игры
+    function saveGame() {
+        try {
+            const saveData = {
+                crypto: game.crypto,
+                totalMined: game.totalMined,
+                miningTime: game.miningTime,
+                currentProgress: game.currentProgress,
+                upgrades: game.upgrades.map(upgrade => ({
+                    id: upgrade.id,
+                    cost: upgrade.cost,
+                    owned: upgrade.owned
+                })),
+                lastUpdate: Date.now(),
+                offlineMiningUnlocked: game.offlineMiningUnlocked,
+                level: game.level,
+                xp: game.xp,
+                xpToNextLevel: game.xpToNextLevel,
+                achievements: game.achievements.map(a => ({
+                    id: a.id,
+                    unlocked: a.unlocked
+                }))
+            };
+            localStorage.setItem('cryptoMiningSave', JSON.stringify(saveData));
+            console.log("Игра сохранена");
+        } catch (e) {
+            console.error("Ошибка сохранения игры:", e);
+        }
+    }
+    
+    // Загрузка игры
+    function loadGame() {
+        try {
+            const saveData = localStorage.getItem('cryptoMiningSave');
+            if (saveData) {
+                const parsed = JSON.parse(saveData);
+                
+                game.crypto = parsed.crypto || 0;
+                game.totalMined = parsed.totalMined || 0;
+                game.miningTime = parsed.miningTime || 60.0;
+                game.currentProgress = parsed.currentProgress || 0;
+                game.lastUpdate = parsed.lastUpdate || Date.now();
+                game.offlineMiningUnlocked = parsed.offlineMiningUnlocked || false;
+                game.level = parsed.level || 1;
+                game.xp = parsed.xp || 0;
+                game.xpToNextLevel = parsed.xpToNextLevel || 100;
+                
+                // Восстанавливаем улучшения
+                parsed.upgrades?.forEach(savedUpgrade => {
+                    const upgrade = game.upgrades.find(u => u.id === savedUpgrade.id);
+                    if (upgrade) {
+                        upgrade.cost = savedUpgrade.cost || upgrade.baseCost;
+                        upgrade.owned = savedUpgrade.owned || 0;
+                    }
+                });
+                
+                // Восстанавливаем достижения
+                parsed.achievements?.forEach(savedAchievement => {
+                    const achievement = game.achievements.find(a => a.id === savedAchievement.id);
+                    if (achievement) {
+                        achievement.unlocked = savedAchievement.unlocked || false;
+                    }
+                });
+                
+                // Рассчитываем оффлайн-доход
+                if (game.offlineMiningUnlocked) {
+                    const now = Date.now();
+                    const offlineTime = Math.min((now - game.lastUpdate) / 1000, 86400); // Максимум 24 часа
+                    if (offlineTime > 0) {
+                        const cryptoPerSecond = (1 / game.miningTime) * 0.35;
+                        const offlineEarnings = offlineTime * cryptoPerSecond;
+                        if (offlineEarnings > 0.01) {
+                            game.crypto += offlineEarnings;
+                            game.totalMined += offlineEarnings;
+                            showNotification(
+                                "Оффлайн майнинг", 
+                                `Вы заработали ${offlineEarnings.toFixed(2)} крипты в оффлайне! (35% от обычного дохода)`,
+                                5000
+                            );
                         }
                     }
                 }
-            } catch (e) {
-                console.error("Ошибка загрузки игры:", e);
-                // Сбрасываем игру при ошибке загрузки
-                localStorage.removeItem('cryptoMiningSave');
             }
+        } catch (e) {
+            console.error("Ошибка загрузки игры:", e);
+            // Сбрасываем игру при ошибке загрузки
+            localStorage.removeItem('cryptoMiningSave');
+        }
+    }
+    
+    // Добавление опыта
+    function addXP(amount) {
+        game.xp += amount;
+        
+        // Проверка уровня
+        while (game.xp >= game.xpToNextLevel) {
+            game.xp -= game.xpToNextLevel;
+            game.level += 1;
+            game.xpToNextLevel = Math.floor(game.xpToNextLevel * 1.2);
+            showNotification(
+                "Новый уровень!", 
+                `Поздравляем! Вы достигли ${game.level} уровня!`,
+                3000
+            );
         }
         
-        // Инициализация игры
-        function initGame() {
-            loadGame();
+        updateUI();
+    }
+    
+    // Проверка достижений
+    function checkAchievements() {
+        game.achievements.forEach(achievement => {
+            if (!achievement.unlocked && achievement.check()) {
+                achievement.unlocked = true;
+                showNotification(
+                    "Достижение разблокировано!", 
+                    `${achievement.name}: ${achievement.reward}`,
+                    4000
+                );
+                
+                // Обработка наград
+                if (achievement.reward.includes("крипты")) {
+                    const amount = parseInt(achievement.reward.match(/\d+/)[0]);
+                    game.crypto += amount;
+                    game.totalMined += amount;
+                }
+                
+                saveGame();
+                updateUI();
+                renderAchievements();
+            }
+        });
+    }
+    
+    // Обновление интерфейса
+    function updateUI() {
+        cryptoElement.textContent = game.crypto.toFixed(2);
+        miningSpeedElement.textContent = `1 крипта / ${game.miningTime.toFixed(1)} сек`;
+        totalMinedElement.textContent = Math.floor(game.totalMined);
+        playerLevelElement.textContent = game.level;
+        playerXpElement.textContent = `${Math.floor(game.xp)}/${Math.floor(game.xpToNextLevel)}`;
+        
+        // Обновляем кнопку оффлайн майнинга
+        offlineUpgradeBtn.disabled = game.crypto < 150 || game.offlineMiningUnlocked;
+    }
+    
+    // Обновление интерфейса оффлайн майнинга
+    function updateOfflineMiningUI() {
+        if (game.offlineMiningUnlocked) {
+            offlineUpgradeBtn.style.display = 'none';
+            offlineStatusElement.textContent = "Статус: разблокировано (доход в оффлайне 35% от обычного)";
+            offlineStatusElement.className = "offline-status unlocked";
+        } else {
+            offlineUpgradeBtn.textContent = `Разблокировать за 150 крипты`;
+            offlineStatusElement.textContent = "Статус: не разблокировано";
+            offlineStatusElement.className = "offline-status locked";
+        }
+    }
+    
+    // Разблокировка оффлайн майнинга
+    function unlockOfflineMining() {
+        if (game.crypto >= 150 && !game.offlineMiningUnlocked) {
+            game.crypto -= 150;
+            game.offlineMiningUnlocked = true;
+            updateUI();
+            updateOfflineMiningUI();
+            saveGame();
+            showNotification(
+                "Оффлайн майнинг", 
+                "Оффлайн майнинг разблокирован! Теперь вы будете получать 35% от обычного дохода, даже когда игра закрыта.",
+                5000
+            );
+            
+            // Проверяем достижения
+            checkAchievements();
+        }
+    }
+    
+    // Рендер улучшений
+    function renderUpgrades() {
+        upgradesContainer.innerHTML = '';
+        
+        const filteredUpgrades = game.upgrades.filter(u => u.category === game.activeTab);
+        
+        filteredUpgrades.forEach(upgrade => {
+            const upgradeElement = document.createElement('div');
+            upgradeElement.className = 'upgrade';
+            
+            const canAfford = game.crypto >= upgrade.cost;
+            const ownedText = upgrade.owned > 0 ? ` (${upgrade.owned})` : '';
+            
+            upgradeElement.innerHTML = `
+                <div class="upgrade-header">
+                    <div class="upgrade-name">${upgrade.name}${ownedText}</div>
+                    ${upgrade.owned > 0 ? `<div class="upgrade-level">Уровень ${upgrade.owned}</div>` : ''}
+                </div>
+                <div class="upgrade-image">
+                    <img src="${upgrade.image}" alt="${upgrade.name}">
+                </div>
+                <div class="upgrade-effect">${upgrade.description}</div>
+                <div class="upgrade-stats">
+                    <div class="upgrade-stat">
+                        <span class="upgrade-stat-label">Эффективность:</span>
+                        <span class="upgrade-stat-value">${upgrade.timeReduction > 0 ? `-${upgrade.timeReduction} сек` : getUpgradeEffectDescription(upgrade)}</span>
+                    </div>
+                    <div class="upgrade-stat">
+                        <span class="upgrade-stat-label">Доходность:</span>
+                        <span class="upgrade-stat-value">+${(1 / (game.miningTime - upgrade.timeReduction) * 100).toFixed(2)}%</span>
+                    </div>
+                </div>
+                <div class="upgrade-cost">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="gold">
+                        <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41-5.64 5.66z"/>
+                    </svg>
+                    ${upgrade.cost} крипты
+                </div>
+                <button class="buy-btn" ${canAfford ? '' : 'disabled'} 
+                        onclick="buyUpgrade('${upgrade.id}')">
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M17 18a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 011 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63-.03.12a.25.25 0 00.25.25H19v2H7a2 2 0 01-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1V2m6 16a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5H16z"/>
+                    </svg>
+                    Купить
+                </button>
+            `;
+            
+            upgradesContainer.appendChild(upgradeElement);
+        });
+    }
+    
+    // Рендер достижений
+    function renderAchievements() {
+        achievementsContainer.innerHTML = '';
+        
+        game.achievements.forEach(achievement => {
+            const achievementElement = document.createElement('div');
+            achievementElement.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
+            
+            achievementElement.innerHTML = `
+                <div class="achievement-icon">
+                    ${achievement.unlocked ? '✓' : '?'}
+                </div>
+                <div class="achievement-name">${achievement.name}</div>
+                <div class="achievement-desc">${achievement.description}</div>
+                <div class="achievement-reward">Награда: ${achievement.reward}</div>
+            `;
+            
+            achievementsContainer.appendChild(achievementElement);
+        });
+    }
+    
+    // Описание эффекта улучшения
+    function getUpgradeEffectDescription(upgrade) {
+        if (upgrade.id === 'overclock') {
+            return "+10% к эффективности";
+        } else if (upgrade.id === 'cooling') {
+            return "+15% к эффективности";
+        } else {
+            return `-${upgrade.timeReduction} сек`;
+        }
+    }
+    
+    // Покупка улучшения
+    function buyUpgrade(upgradeId) {
+        const upgrade = game.upgrades.find(u => u.id === upgradeId);
+        
+        if (game.crypto >= upgrade.cost) {
+            game.crypto -= upgrade.cost;
+            upgrade.owned += 1;
+            upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.5, upgrade.owned));
+            
+            // Сохраняем текущий прогресс перед обновлением
+            const currentProgress = game.currentProgress;
+            
+            // Применяем эффект улучшения
+            applyUpgradeEffect(upgrade);
+            
+            // Восстанавливаем прогресс
+            game.currentProgress = currentProgress * (game.miningTime / (game.miningTime + (upgrade.timeReduction || 0)));
+            
+            // Добавляем опыт
+            addXP(10 + upgrade.owned * 2);
+            
             updateUI();
             renderUpgrades();
-            updateOfflineMiningUI();
+            saveGame();
             
-            // Восстанавливаем прогресс майнинга
-            if (game.currentProgress > 0) {
-                miningProgressElement.style.width = `${game.currentProgress}%`;
+            // Создаем эффект частиц
+            createMiningParticles();
+            
+            // Проверяем достижения
+            checkAchievements();
+        }
+    }
+    
+    // Применение эффекта улучшения
+    function applyUpgradeEffect(upgrade) {
+        let baseTime = 60.0;
+        game.miningTime = baseTime;
+        
+        game.upgrades.forEach(u => {
+            if (u.id === 'overclock') {
+                for (let i = 0; i < u.owned; i++) {
+                    game.miningTime *= 0.9; // 10% улучшение
+                }
+            } else if (u.id === 'cooling') {
+                for (let i = 0; i < u.owned; i++) {
+                    game.miningTime *= 0.85; // 15% улучшение
+                }
+            } else if (u.timeReduction > 0) {
+                game.miningTime -= u.timeReduction * u.owned;
             }
-            
+        });
+        
+        game.miningTime = Math.max(game.miningTime, game.minMiningTime);
+        
+        if (game.isMining) {
+            stopMining();
             startMining();
-            
-            // Автосохранение каждые 30 секунд
-            setInterval(saveGame, 30000);
-            
-            // Сохраняем при закрытии страницы
-            window.addEventListener('beforeunload', saveGame);
-            
-            // Обработчик кнопки оффлайн майнинга
-            offlineUpgradeBtn.addEventListener('click', unlockOfflineMining);
         }
+    }
+    
+    // Начать майнинг
+    function startMining() {
+        if (game.isMining) return;
         
-        // Обновление интерфейса
-        function updateUI() {
-            cryptoElement.textContent = game.crypto.toFixed(2);
-            miningTimeElement.textContent = game.miningTime.toFixed(1);
+        game.isMining = true;
+        miningTextElement.textContent = "⛏️ Майнинг...";
+        
+        const progressStep = 100 / (game.miningTime * 10);
+        
+        game.progressInterval = setInterval(() => {
+            game.currentProgress += progressStep;
+            miningProgressElement.style.width = `${Math.min(game.currentProgress, 100)}%`;
             
-            // Обновляем кнопку оффлайн майнинга
-            offlineUpgradeBtn.disabled = game.crypto < 150 || game.offlineMiningUnlocked;
-        }
-        
-        // Обновление интерфейса оффлайн майнинга
-        function updateOfflineMiningUI() {
-            if (game.offlineMiningUnlocked) {
-                offlineUpgradeBtn.style.display = 'none';
-                offlineStatusElement.textContent = "Статус: разблокировано (доход в оффлайне 35% от обычного)";
-                offlineStatusElement.style.color = "#00ffaa";
-            } else {
-                offlineUpgradeBtn.textContent = `Разблокировать за 150 крипты`;
-                offlineStatusElement.textContent = "Статус: не разблокировано";
-                offlineStatusElement.style.color = "#ff5555";
-            }
-        }
-        
-        // Разблокировка оффлайн майнинга
-        function unlockOfflineMining() {
-            if (game.crypto >= 150 && !game.offlineMiningUnlocked) {
-                game.crypto -= 150;
-                game.offlineMiningUnlocked = true;
-                updateUI();
-                updateOfflineMiningUI();
-                saveGame();
-                alert("Оффлайн майнинг разблокирован! Теперь вы будете получать 35% от обычного дохода, даже когда игра закрыта.");
-            }
-        }
-        
-        // Рендер улучшений
-        function renderUpgrades() {
-            upgradesContainer.innerHTML = '';
-            
-            game.upgrades.forEach(upgrade => {
-                const upgradeElement = document.createElement('div');
-                upgradeElement.className = 'upgrade';
+            if (game.currentProgress >= 100) {
+                game.currentProgress = 0;
+                miningProgressElement.style.width = '0%';
+                game.crypto += 1;
+                game.totalMined += 1;
                 
-                const canAfford = game.crypto >= upgrade.cost;
+                // Добавляем опыт за майнинг
+                addXP(1);
                 
-                upgradeElement.innerHTML = `
-                    <div class="upgrade-name">${upgrade.name} (${upgrade.owned})</div>
-                    <div class="upgrade-effect">${getUpgradeEffectDescription(upgrade)}</div>
-                    <div class="upgrade-cost">Стоимость: ${upgrade.cost} крипты</div>
-                    <button class="buy-btn" ${canAfford ? '' : 'disabled'} 
-                            onclick="buyUpgrade('${upgrade.id}')">
-                        Купить
-                    </button>
-                `;
-                
-                upgradesContainer.appendChild(upgradeElement);
-            });
-        }
-        
-        // Описание эффекта улучшения
-        function getUpgradeEffectDescription(upgrade) {
-            if (upgrade.id === 'overclock') {
-                return "Уменьшает время майнинга всех карт на 10%";
-            } else if (upgrade.id === 'cooling') {
-                return "Дополнительно уменьшает время майнинга на 15%";
-            } else {
-                return `Уменьшает время майнинга на ${upgrade.timeReduction} сек`;
-            }
-        }
-        
-        // Покупка улучшения
-        function buyUpgrade(upgradeId) {
-            const upgrade = game.upgrades.find(u => u.id === upgradeId);
-            
-            if (game.crypto >= upgrade.cost) {
-                game.crypto -= upgrade.cost;
-                upgrade.owned += 1;
-                upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.5, upgrade.owned));
-                
-                // Сохраняем текущий прогресс перед обновлением
-                const currentProgress = game.currentProgress;
-                
-                // Применяем эффект улучшения
-                applyUpgradeEffect(upgrade);
-                
-                // Восстанавливаем прогресс
-                game.currentProgress = currentProgress * (game.miningTime / (game.miningTime + upgrade.timeReduction));
+                // Создаем эффект частиц
+                createMiningParticles();
                 
                 updateUI();
                 renderUpgrades();
                 saveGame();
-            }
-        }
-        
-        // Применение эффекта улучшения
-        function applyUpgradeEffect(upgrade) {
-            let baseTime = 60.0;
-            game.miningTime = baseTime;
-            
-            game.upgrades.forEach(u => {
-                if (u.id === 'overclock') {
-                    for (let i = 0; i < u.owned; i++) {
-                        game.miningTime *= 0.9;
-                    }
-                } else if (u.id === 'cooling') {
-                    for (let i = 0; i < u.owned; i++) {
-                        game.miningTime *= 0.85;
-                    }
-                } else if (u.timeReduction > 0) {
-                    game.miningTime -= u.timeReduction * u.owned;
-                }
-            });
-            
-            game.miningTime = Math.max(game.miningTime, game.minMiningTime);
-            
-            if (game.isMining) {
-                stopMining();
-                startMining();
-            }
-        }
-        
-        // Начать майнинг
-        function startMining() {
-            if (game.isMining) return;
-            
-            game.isMining = true;
-            miningTextElement.textContent = "⛏️ Майнинг...";
-            
-            const progressStep = 100 / (game.miningTime * 10);
-            
-            game.progressInterval = setInterval(() => {
-                game.currentProgress += progressStep;
-                miningProgressElement.style.width = `${Math.min(game.currentProgress, 100)}%`;
                 
-                if (game.currentProgress >= 100) {
-                    game.currentProgress = 0;
-                    miningProgressElement.style.width = '0%';
-                    game.crypto += 1;
-                    updateUI();
-                    renderUpgrades();
-                    saveGame();
-                }
-            }, 100);
+                // Проверяем достижения
+                checkAchievements();
+            }
+        }, 100);
+    }
+    
+    // Остановить майнинг
+    function stopMining() {
+        if (!game.isMining) return;
+        
+        clearInterval(game.progressInterval);
+        game.isMining = false;
+        miningTextElement.textContent = "⛏️ Майнинг не запущен";
+    }
+    
+    // Инициализация игры
+    function initGame() {
+        // Получаем элемент кнопки сброса
+        const resetBtn = document.getElementById('reset-btn');
+        resetBtn.addEventListener('click', resetGame);
+        
+        loadGame();
+        updateUI();
+        renderUpgrades();
+        renderAchievements();
+        updateOfflineMiningUI();
+        
+        if (game.currentProgress > 0) {
+            miningProgressElement.style.width = `${game.currentProgress}%`;
         }
         
-        // Остановить майнинг
-        function stopMining() {
-            if (!game.isMining) return;
-            
-            clearInterval(game.progressInterval);
-            game.isMining = false;
-            miningTextElement.textContent = "⛏️ Майнинг не запущен";
-        }
+        startMining();
         
-        // Автоматически начать майнинг при загрузке
-        window.onload = initGame;
-    </script>
+        setInterval(saveGame, 30000);
+        window.addEventListener('beforeunload', saveGame);
+        offlineUpgradeBtn.addEventListener('click', unlockOfflineMining);
+        
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                game.activeTab = btn.dataset.tab;
+                renderUpgrades();
+            });
+        });
+    }
+    
+    // Глобальные функции
+    window.buyUpgrade = buyUpgrade;
+    
+    // Автоматически начать майнинг при загрузке
+    window.onload = initGame;
+</script>
 </body>
 </html>

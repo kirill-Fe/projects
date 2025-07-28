@@ -821,20 +821,20 @@
                 </div>
 
                 <!-- Проект 14 -->
-                <div class="project-card" data-platform="testers" data-content="games">
+                <div class="project-card" data-platform="testers" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
                         <div class="testeram monoforum-badge">доступ тестерам</div>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer" id="ErrorGame">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 15 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -846,7 +846,7 @@
                 </div>
 
                 <!-- Проект 16 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -858,7 +858,7 @@
                 </div>
 
                 <!-- Проект 17 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -870,7 +870,7 @@
                 </div>
 
                 <!-- Проект 18 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -882,7 +882,7 @@
                 </div>
 
                 <!-- Проект 19 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -894,7 +894,7 @@
                 </div>
 
                 <!-- Проект 20 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -906,7 +906,7 @@
                 </div>
 
                 <!-- Проект 21 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="games">
+                <div class="project-card" data-platform="pc-mobile" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
@@ -927,7 +927,7 @@
     <div class="custom-alert-overlay" id="customAlert">
         <div class="custom-alert">
             <h3>Доступ ограничен</h3>
-            <p>Вам не доступен проект 13 (новая игра)</p>
+            <p>Вам не доступен проект 14</p>
             <button class="custom-alert-btn" id="customAlertClose">Понятно</button>
         </div>
     </div>
@@ -1034,14 +1034,14 @@
             };
         }
         
-        // Обновите обработчик для проекта 13
+        // Обновите обработчик для проекта 14
         document.addEventListener('DOMContentLoaded', function() {
             const errorElement = document.getElementById('ErrorGame');
                 
             if (errorElement) {
                 errorElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    showCustomAlert('Вам не доступен проект 14 (новая игра)', 'Доступ ограничен');
+                    showCustomAlert('Вам не доступен проект 14', 'Доступ ограничен');
                 });
             }
         });

@@ -6,6 +6,12 @@
     <title>Florik - Проекты</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="https://vki7.okcdn.ru/i?r=CICaQJv1RQZIqEhgaodSLR1KLtxTOn52Q4RHLL7Vm3JVBGZbP3leH0RC5qO3gdzrmxuIHSJekcCfq2q6Wou6tMyrsUbZmdCaNbGhOrd_ehQqSoL-kCi5R9bXIN43r7qpJs4cUsS2seUyucPvclnSMa_tJWrI_5wHZ6_IOE4EGRzbjuzjTh_BQso7CQEXZv_JQcg-W5H3Yc-dwHL7AAAAKQ" type="image/x-icon">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="PROJECTS">
+    <link rel="apple-touch-icon" href="./IMG/i.png">
     <style>
         /* Анимация загрузки */
         .loader-wrapper {
@@ -815,7 +821,7 @@
                         <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
                         <p class="project-description">Играй и прокачивай свою майнинг ферму</p>
                         <div class="project-links">
-                            <a href="https://kirill-fe.github.io/projects/MMF" class="project-link play-link" target="_blank" rel="noopener noreferrer">Играть</a>
+                            <a href="https://kirill-fe.github.io/projects/MMF" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
@@ -927,7 +933,7 @@
     <div class="custom-alert-overlay" id="customAlert">
         <div class="custom-alert">
             <h3>Доступ ограничен</h3>
-            <p>Вам не доступен проект 14</p>
+            <p>Вам не доступен проект 14 (новая игра)</p>
             <button class="custom-alert-btn" id="customAlertClose">Понятно</button>
         </div>
     </div>
@@ -1041,7 +1047,7 @@
             if (errorElement) {
                 errorElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    showCustomAlert('Вам не доступен проект 14', 'Доступ ограничен');
+                    showCustomAlert('Вам не доступен проект 14 (новая игра)', 'Доступ ограничен');
                 });
             }
         });
@@ -1111,6 +1117,34 @@
             // Инициализируем фильтры по умолчанию
             filterProjects();
         });
+    </script>
+
+    <script>
+    const CACHE_NAME = 'my-site-cache-v1';
+    const urlsToCache = [
+    '/',
+    '/projects/',
+    '/styles/main.css',
+    '/script/main.js'
+    ];
+
+    self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(cache => {
+            return cache.addAll(urlsToCache);
+        })
+    );
+    });
+
+    self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+        .then(response => {
+            return response || fetch(event.request);
+        })
+    );
+    });
     </script>
 </body>
 </html>

@@ -827,26 +827,27 @@
                 </div>
 
                 <!-- Проект 14 -->
-                <div class="project-card" data-platform="testers" data-content="">
-                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
+                <div class="project-card" data-platform="pc-mobile" data-content="articles">
+                    <div class="project-image" style="background-image: url('./IMG/ВБ.jpg');"></div>
                     <div class="project-info">
-                        <h3 class="project-title">NAME</h3>
-                        <div class="testeram monoforum-badge">доступ тестерам</div>
-                        <p class="project-description">TITLE</p>
+                        <h3 class="project-title">Ответы на тест для сотрудников ОПС Wildberries</h3>
+                        <div class="Sdwfc851 monoforum-badge">Доступ с пк/мобилы</div>
+                        <p class="project-description">Вопросы точно из приложения Jam Работа</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer" id="ErrorGame">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Проект 15 -->
-                <div class="project-card" data-platform="pc-mobile" data-content="">
+                <div class="project-card" data-platform="testers" data-content="">
                     <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">NAME</h3>
+                        <div class="testeram monoforum-badge">доступ ограничен</div>
                         <p class="project-description">TITLE</p>
                         <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer">Читать/Играть</a>
+                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer" id="ErrorGame">Читать/Играть</a>
                         </div>
                     </div>
                 </div>
@@ -1040,14 +1041,14 @@
             };
         }
         
-        // Обновите обработчик для проекта 14
+        // Обновите обработчик для проекта 15
         document.addEventListener('DOMContentLoaded', function() {
             const errorElement = document.getElementById('ErrorGame');
                 
             if (errorElement) {
                 errorElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    showCustomAlert('Вам не доступен проект 14 (новая игра)', 'Доступ ограничен');
+                    showCustomAlert('Вам не доступен проект 15 (что то)', 'Доступ ограничен');
                 });
             }
         });

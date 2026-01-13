@@ -933,7 +933,7 @@
         </div>
 
         <footer>
-            <p>© 2025-2026 <a href="https://t.me/Kirill_Florik" title="TG" target="_blank" rel="noopener noreferrer">Kirill_Florik</a></p>
+            <p>© 2025- <a href="https://t.me/Kirill_Florik" title="TG" target="_blank" rel="noopener noreferrer">Kirill_Florik</a></p>
         </footer>
     </div>
 
@@ -965,6 +965,13 @@
                     window.addEventListener('scroll', handleScroll);
                 }, 1000);
             }, 2500); //время загрузки 2.5 секунды
+
+            //Текущий год
+            const currentYear = new Date().getFullYear();
+            const footer = document.querySelector('footer p');
+            if (footer) {
+                footer.innerHTML = `© 2025-${currentYear} <a href="https://t.me/Kirill_Florik" title="TG" target="_blank" rel="noopener noreferrer">Kirill_Florik</a>`;
+            }
         });
 
         // Функция для показа первых карточек

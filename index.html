@@ -12,6 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="PROJECTS">
     <link rel="apple-touch-icon" href="./IMG/i.png">
+    <meta name="description" content="Florik projects - игры, статьи, сайт на заказ">
     <style>
         /* Анимация загрузки */
         .loader-wrapper {
@@ -455,6 +456,43 @@
             color: white;
         }
 
+        /* Стили для кнопки заказа сайта */
+        .order-container {
+            margin-top: 1.5rem;
+            animation: fadeIn 1s 0.9s ease both;
+        }
+
+        .order-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent), #ff9a8b);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+            background: linear-gradient(135deg, #ff9163, var(--accent));
+        }
+
+        .order-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .order-btn i {
+            font-size: 1.1rem;
+        }
+
         /*кастомная ошибка*/
         .custom-alert-overlay {
             position: fixed;
@@ -628,6 +666,11 @@
                     </a>
                     <a href="https://www.twitch.tv/kirill_florik" title="twitch" class="twitch" target="_blank" rel="noopener noreferrer"> 
                         <i class="fab fa-twitch"></i> 
+                    </a>
+                </div>
+                <div class="order-container">
+                    <a href="https://t.me/kirill_florik?text=привет+сделай+сайт+пожалуйста+(название+сайта)" class="order-btn" id="orderSiteBtn">
+                        <i class="fas fa-code"></i> Заказать сайт бесплатно
                     </a>
                 </div>
             </div>

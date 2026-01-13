@@ -669,7 +669,7 @@
                     </a>
                 </div>
                 <div class="order-container">
-                    <a href="https://t.me/kirill_florik?text=привет+сделай+сайт+пожалуйста+(название+сайта)" class="order-btn" id="orderSiteBtn">
+                    <a href="#" class="order-btn" id="orderSiteBtn">
                         <i class="fas fa-code"></i> Заказать сайт бесплатно
                     </a>
                 </div>
@@ -1193,6 +1193,71 @@
         })
     );
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    const orderBtn = document.getElementById('orderSiteBtn');
+    
+    if (orderBtn) {
+        orderBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showOrderModal();
+        });
+    }
+    
+    function showOrderModal() {
+        const modalHtml = `
+            <div class="custom-alert-overlay active" id="orderModal">
+                <div class="custom-alert">
+                    <h3>Заказать сайт бесплатно</h3>
+                    <p>Хотите собственный сайт? Свяжитесь со мной для обсуждения деталей!</p>
+                    <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                        <a href="https://t.me/kirill_florik?text=привет+сделай+сайт+пожалуйста+(название+сайта)" 
+                           class="custom-alert-btn" 
+                           style="background: rgba(39, 167, 231, 0.8); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+                           target="_blank">
+                            <i class="fab fa-telegram"></i> Написать в Telegram
+                        </a>
+                        <a href="https://vk.com/Kirill_Florik" 
+                           class="custom-alert-btn" 
+                           style="background: #4C75A3; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+                           target="_blank">
+                            <i class="fab fa-vk"></i> Написать в ВКонтакте
+                        </a>
+                        <button class="custom-alert-btn" id="closeOrderModal" style="background: var(--darker);">
+                            Закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Удаляем существующее модальное окно заказа (если есть)
+        const existingModal = document.getElementById('orderModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // Добавляем новое модальное окно
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        // Закрытие модального окна
+        document.getElementById('closeOrderModal').addEventListener('click', function() {
+            const modal = document.getElementById('orderModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        });
+        
+        // Закрытие по клику вне окна
+        document.getElementById('orderModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                setTimeout(() => this.remove(), 300);
+            }
+        });
+    }
+});
+
 
     self.addEventListener('fetch', event => {
     event.respondWith(

@@ -196,6 +196,97 @@
                           rgba(255,255,255,0.1) 100%);
             animation: progress-shine 2s infinite;
         }
+
+        .click-section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+            border: 1px solid #303050;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .click-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), #ff55ff, var(--primary-color));
+        }
+        
+        .click-btn {
+            background: linear-gradient(135deg, #ff55ff, #aa00ff);
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: all 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 85, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            user-select: none;
+        }
+        
+        .click-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 85, 255, 0.5);
+        }
+        
+        .click-btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+        
+        .click-btn:disabled {
+            background: #505070;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .click-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .click-stat-item {
+            background-color: rgba(255, 85, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid #ff55ff;
+        }
+        
+        .click-icon {
+            width: 24px;
+            height: 24px;
+            filter: drop-shadow(0 0 5px rgba(255, 85, 255, 0.8));
+        }
+        
+        .click-animation {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff55ff;
+            opacity: 0;
+            z-index: 100;
+            animation: float-click 1s ease-out forwards;
+        }
+        
+        @keyframes float-click {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+        }
         
         @keyframes progress-shine {
             0% { transform: translateX(-100%); }
@@ -576,6 +667,41 @@
     <button class="reset-btn" id="reset-btn">Начать заново</button>
     
     <h1>Крипто-майнинг ферма</h1>
+
+        <div class="click-section">
+        <h3 style="color: #ff55ff; margin-bottom: 15px;">Быстрый клик-майнинг</h3>
+        <p style="margin-bottom: 15px;">Кликай на кнопку для быстрой добычи крипты!</p>
+        
+        <button id="click-btn" class="click-btn">
+            <svg class="click-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-1.1 2-2.76 5H8.53l-.13-.27L6.16 6l-.95-2-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.13 0-.25-.11-.25-.25z"/>
+            </svg>
+            КЛИКНИ ДЛЯ МАЙНИНГА!
+        </button>
+        
+        <div class="click-stats">
+            <div class="click-stat-item">
+                <div class="stat-label">Доход за клик</div>
+                <div class="stat-value" style="color: #ff55ff;">0.05 крипты</div>
+            </div>
+            <div class="click-stat-item">
+                <div class="stat-label">Кликов осталось</div>
+                <div class="stat-value" id="clicks-left">100/100</div>
+            </div>
+            <div class="click-stat-item">
+                <div class="stat-label">Время до обновления</div>
+                <div class="stat-value" id="click-timer">03:00</div>
+            </div>
+            <div class="click-stat-item">
+                <div class="stat-label">Всего заработано</div>
+                <div class="stat-value" id="total-clicked">0.00</div>
+            </div>
+        </div>
+        
+        <p style="font-size: 14px; color: var(--text-dim); margin-top: 15px;">
+            Лимит: 100 кликов каждые 3 минуты. Прокачивать клики нельзя.
+        </p>
+    </div>
     
     <div class="stats">
         <div class="crypto-count">
@@ -676,7 +802,7 @@
         }
     }
 
-    // Добавляем функцию в глобальную область видимости
+    //функция в глобальную область видимости
     window.resetGame = resetGame;
 
     // Игровые данные
@@ -693,6 +819,16 @@
         level: 1,
         xp: 0,
         xpToNextLevel: 100,
+        
+        // Новые свойства для кликов    
+        clickCount: 0,
+        maxClicks: 100,
+        clickTimer: 180, // 3 минуты в секундах
+        clickTimerInterval: null,
+        lastClickTime: null,
+        totalClicked: 0,
+        clicksPerClick: 0.05,
+        
         upgrades: [
             {
                 id: "gtx1050",
@@ -932,7 +1068,114 @@
     const notificationElement = document.getElementById('notification');
     const notificationTitleElement = document.getElementById('notification-title');
     const notificationMessageElement = document.getElementById('notification-message');
+    const clickBtn = document.getElementById('click-btn');
+    const clicksLeftElement = document.getElementById('clicks-left');
+    const clickTimerElement = document.getElementById('click-timer');
+    const totalClickedElement = document.getElementById('total-clicked');
     const tabButtons = document.querySelectorAll('.tab-btn');
+
+        // Функция форматирования времени
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    // Функция обновления таймера кликов
+    function updateClickTimer() {
+        if (game.clickTimer > 0) {
+            game.clickTimer--;
+            clickTimerElement.textContent = formatTime(game.clickTimer);
+            
+            // Если таймер истек, сбрасываем клики
+            if (game.clickTimer <= 0) {
+                resetClickCounter();
+            }
+        }
+    }
+    
+    // Функция сброса счетчика кликов
+    function resetClickCounter() {
+        game.clickCount = 0;
+        game.clickTimer = 180; // 3 минуты
+        updateClickUI();
+        
+        // Сохраняем игру
+        saveGame();
+    }
+    
+    // Функция обновления UI кликов
+    function updateClickUI() {
+        clicksLeftElement.textContent = `${game.maxClicks - game.clickCount}/${game.maxClicks}`;
+        clickTimerElement.textContent = formatTime(game.clickTimer);
+        totalClickedElement.textContent = game.totalClicked.toFixed(2);
+        
+        // Отключаем кнопку если достигнут лимит
+        clickBtn.disabled = game.clickCount >= game.maxClicks;
+    }
+    
+    // Функция обработки клика
+    function handleClick() {
+        if (game.clickCount >= game.maxClicks) {
+            showNotification("Лимит кликов", "Вы достигли лимита кликов! Подождите " + formatTime(game.clickTimer) + " минут", 3000);
+            return;
+        }
+        
+        // Увеличиваем счетчик кликов
+        game.clickCount++;
+        game.lastClickTime = Date.now();
+        
+        //крипту
+        game.crypto += game.clicksPerClick;
+        game.totalMined += game.clicksPerClick;
+        game.totalClicked += game.clicksPerClick;
+        
+        //опыт
+        addXP(0.5);
+        
+        // Создаем анимацию
+        createClickAnimation();
+        
+        // Обновляем UI
+        updateUI();
+        updateClickUI();
+        
+        // Сохраняем игру
+        saveGame();
+        
+        // Проверяем достижения
+        checkAchievements();
+        
+        // Если это первый клик, запускаем таймер
+        if (game.clickCount === 1 && !game.clickTimerInterval) {
+            startClickTimer();
+        }
+    }
+    
+    // Функция создания анимации клика
+    function createClickAnimation() {
+        const animation = document.createElement('div');
+        animation.className = 'click-animation';
+        animation.textContent = `+${game.clicksPerClick}`;
+        animation.style.left = `${Math.random() * 200 - 50}px`;
+        animation.style.top = `${Math.random() * 100 + 50}px`;
+        
+        clickBtn.parentNode.appendChild(animation);
+        
+        // Удаляем анимацию после завершения
+        setTimeout(() => {
+            animation.remove();
+        }, 1000);
+    }
+    
+    // Функция запуска таймера кликов
+    function startClickTimer() {
+        if (game.clickTimerInterval) {
+            clearInterval(game.clickTimerInterval);
+        }
+        
+        game.clickTimerInterval = setInterval(updateClickTimer, 1000);
+    }
     
     // Уведомления
     function showNotification(title, message, duration = 3000) {
@@ -980,7 +1223,12 @@
                 achievements: game.achievements.map(a => ({
                     id: a.id,
                     unlocked: a.unlocked
-                }))
+                })),
+                // Сохраняем данные о кликах
+                clickCount: game.clickCount,
+                clickTimer: game.clickTimer,
+                lastClickTime: game.lastClickTime,
+                totalClicked: game.totalClicked
             };
             localStorage.setItem('cryptoMiningSave', JSON.stringify(saveData));
             console.log("Игра сохранена");
@@ -1005,6 +1253,25 @@
                 game.level = parsed.level || 1;
                 game.xp = parsed.xp || 0;
                 game.xpToNextLevel = parsed.xpToNextLevel || 100;
+                game.clickCount = parsed.clickCount || 0;
+                game.totalClicked = parsed.totalClicked || 0;
+
+                // Восстанавливаем таймер кликов
+                if (parsed.lastClickTime && parsed.clickTimer) {
+                    const now = Date.now();
+                    const timeSinceLastClick = Math.floor((now - parsed.lastClickTime) / 1000);
+                    const remainingTime = parsed.clickTimer - timeSinceLastClick;
+                    
+                    if (remainingTime > 0 && game.clickCount > 0) {
+                        // Таймер еще активен
+                        game.clickTimer = remainingTime;
+                    } else {
+                        // Таймер истек или кликов не было
+                        resetClickCounter();
+                    }
+                } else {
+                    resetClickCounter();
+                }
                 
                 // Восстанавливаем улучшения
                 parsed.upgrades?.forEach(savedUpgrade => {
@@ -1238,7 +1505,7 @@
             // Восстанавливаем прогресс
             game.currentProgress = currentProgress * (game.miningTime / (game.miningTime + (upgrade.timeReduction || 0)));
             
-            // Добавляем опыт
+            //опыт
             addXP(10 + upgrade.owned * 2);
             
             updateUI();
@@ -1299,7 +1566,7 @@
                 game.crypto += 1;
                 game.totalMined += 1;
                 
-                // Добавляем опыт за майнинг
+                //опыт за майнинг
                 addXP(1);
                 
                 // Создаем эффект частиц
@@ -1335,9 +1602,11 @@
         renderUpgrades();
         renderAchievements();
         updateOfflineMiningUI();
+        updateClickUI();
         
-        if (game.currentProgress > 0) {
-            miningProgressElement.style.width = `${game.currentProgress}%`;
+        // Запускаем таймер кликов
+        if (game.clickCount > 0 && game.clickTimer > 0) {
+            startClickTimer();
         }
         
         startMining();
@@ -1353,6 +1622,12 @@
                 game.activeTab = btn.dataset.tab;
                 renderUpgrades();
             });
+        });
+        //обработчик клика
+        clickBtn.addEventListener('click', handleClick);
+        
+        //возможность кликать по всей странице  
+        document.addEventListener('click', (e) => {
         });
     }
     

@@ -91,36 +91,28 @@
             pointer-events: none;
         }
 
-        /* Курсор для input полей */
         input, textarea {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2363f2c8" d="M12 1c4.97 0 9 3.59 9 8 0 2.38-.93 4.51-2.42 5.96l1.42 1.42C20.04 15.14 21 12.74 21 10c0-5.52-4.48-10-10-10S1 4.48 1 10s4.48 10 10 10c1.27 0 2.47-.24 3.57-.66l1.43 1.43C14.61 21.27 13.35 21.5 12 21.5c-6.33 0-11.5-5.17-11.5-11.5S5.67.5 12 .5zM9.5 7.5h2v2h-2zm0 3h2v2h-2zm3 0h2v2h-2zm-3 3h2v2h-2zm3 0h2v2h-2z"/></svg>'), 
-              text;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2363f2c8" d="M12 1c4.97 0 9 3.59 9 8 0 2.38-.93 4.51-2.42 5.96l1.42 1.42C20.04 15.14 21 12.74 21 10c0-5.52-4.48-10-10-10S1 4.48 1 10s4.48 10 10 10c1.27 0 2.47-.24 3.57-.66l1.43 1.43C14.61 21.27 13.35 21.5 12 21.5c-6.33 0-11.5-5.17-11.5-11.5S5.67.5 12 .5zM9.5 7.5h2v2h-2zm0 3h2v2h-2zm3 0h2v2h-2zm-3 3h2v2h-2zm3 0h2v2h-2z"/></svg>'), text;
         }
 
-        /* Стили для выделения текста */
         ::selection {
             background: var(--primary);
             color: var(--lighter);
             text-shadow: none;
         }
 
-        /* Для Firefox */
         ::-moz-selection {
             background: var(--primary);
             color: var(--lighter);
             text-shadow: none;
         }
 
-        /* Стиль курсора */
         html {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%238a63f2" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), 
-                auto;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%238a63f2" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), auto;
         }
 
-        /* Изменение курсора при наведении на ссылки и кнопки */
         a, button, .project-link, .choice-btn, .npc-btn, .item {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff7e5f" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), 
-                pointer;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff7e5f" d="M3 3l18 18-6-6V11L7 6v11z"/></svg>'), pointer;
         }
 
         ::-webkit-scrollbar {
@@ -248,22 +240,18 @@
             background: rgba(39, 167, 231, 0.8);
             transform: translateY(-6px);
         }
-
         .social-links a.TGK:hover {
             background: rgba(39, 167, 231, 0.8);
             transform: translateY(-6px);
         }
-
         .social-links a.VK:hover {
             background: rgba(77, 113, 152, 0.8);
             transform: translateY(-6px);
         }
-
         .social-links a.donate:hover {
             background: rgba(255, 153, 0, 0.8);
             transform: translateY(-6px);
         }
-
         .social-links a.twitch:hover {
             background: rgba(145, 70, 255);
             transform: translateY(-6px);
@@ -387,17 +375,14 @@
             background: var(--primary);
             color: white;
         }
-
         .play-link:hover {
             background: #7a4fdf;
             transform: translateY(-6px);
         }
-
         .read-link {
             border: 1px solid var(--primary);
             color: var(--primary);
         }
-
         .read-link:hover {
             background: rgba(var(--primary), 0.1);
         }
@@ -418,7 +403,6 @@
             transition: color 0.3s ease;
             text-decoration: none;
         }
-
         footer a:hover {
             color: var(--primary);
         }
@@ -436,11 +420,9 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .theme-switcher input {
             display: none;
         }
-
         .theme-icon {
             width: 30px;
             height: 30px;
@@ -450,18 +432,15 @@
             justify-content: center;
             font-size: 16px;
         }
-
         .theme-icon.active {
             background: var(--primary);
             color: white;
         }
 
-        /* Стили для кнопки заказа сайта */
         .order-container {
             margin-top: 1.5rem;
             animation: fadeIn 1s 0.9s ease both;
         }
-
         .order-btn {
             display: inline-flex;
             align-items: center;
@@ -478,22 +457,18 @@
             border: none;
             cursor: pointer;
         }
-
         .order-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
             background: linear-gradient(135deg, #ff9163, var(--accent));
         }
-
         .order-btn:active {
             transform: translateY(-1px);
         }
-
         .order-btn i {
             font-size: 1.1rem;
         }
 
-        /*кастомная ошибка*/
         .custom-alert-overlay {
             position: fixed;
             top: 0;
@@ -509,12 +484,10 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
-        
         .custom-alert-overlay.active {
             opacity: 1;
             pointer-events: all;
         }
-        
         .custom-alert {
             background: var(--card-bg);
             border-radius: 12px;
@@ -527,22 +500,18 @@
             transition: transform 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
         .custom-alert-overlay.active .custom-alert {
             transform: translateY(0);
         }
-        
         .custom-alert h3 {
             color: var(--lighter);
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
-        
         .custom-alert p {
             color: var(--text-secondary);
             margin-bottom: 2rem;
         }
-        
         .custom-alert-btn {
             background: var(--primary);
             color: white;
@@ -554,33 +523,29 @@
             transition: all 0.3s ease;
             font-size: 1rem;
         }
-        
         .custom-alert-btn:hover {
             background: #7a4fdf;
             transform: translateY(-2px);
         }
-        
+
         .filters-container {
             display: flex;
             flex-direction: column;
             gap: 1rem;
             margin-bottom: 2rem;
         }
-        
         .filter-group {
             display: flex;
             justify-content: center;
             gap: 1rem;
             flex-wrap: wrap;
         }
-        
         .filter-group-title {
             text-align: center;
             color: var(--primary);
             margin-bottom: 0.5rem;
             font-size: 1rem;
         }
-        
         .filter-btn {
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -591,22 +556,97 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
         }
-        
         .filter-btn.active {
             background: var(--primary);
             color: white;
         }
-        
         .filter-btn:hover:not(.active) {
             background: rgba(var(--primary), 0.1);
         }
-        
-        /* Добавляем класс для скрытых проектов */
         .project-card.hidden {
             display: none;
         }
 
-        /*-----*/
+        /* Стили для модального окна дня рождения */
+        .birthday-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .birthday-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .birthday-modal {
+            background: var(--card-bg);
+            border-radius: 32px;
+            max-width: 420px;
+            width: 90%;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            border: 1px solid var(--primary);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .birthday-modal-overlay.active .birthday-modal {
+            transform: scale(1);
+        }
+        .birthday-modal h2 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        .birthday-modal p {
+            font-size: 1.2rem;
+            margin-bottom: 1.8rem;
+            color: var(--text);
+        }
+        .birthday-modal .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #27a7e7;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+        .birthday-modal .telegram-link:hover {
+            background: #1c8bc2;
+            transform: translateY(-3px);
+        }
+        .birthday-modal .close-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .birthday-modal .close-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -616,11 +656,9 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
-            
             h1 {
                 font-size: 2rem;
             }
-            
             .theme-switcher {
                 top: 10px;
                 right: 10px;
@@ -629,7 +667,6 @@
     </style>
 </head>
 <body data-theme="dark">
-    <!-- Анимация загрузки -->
     <div class="loader-wrapper">
         <div class="loader">
             <div class="loader-inner"></div>
@@ -679,7 +716,6 @@
         <div class="container">
             <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">Проекты</h2>
 
-            <!--фильтры -->
             <div class="filters-container" id="filtersContainer">
                 <div class="filter-group">
                     <div class="filter-group-title">Платформы:</div>
@@ -891,7 +927,7 @@
                     <div class="project-image" style="background-image: url('./IMG/game.jpg');"></div>
                     <div class="project-info">
                         <h3 class="project-title">3D игра</h3>
-                        <div class="testeram monoforum-badge">Доступ с ПК</div>
+                        <div class="testeram monoforum-badge">НЕ ДОСТУПНА</div>
                         <p class="project-description">3D Game</p>
                         <div class="project-links">
                             <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer" id="ErrorGame">Играть</a>
@@ -976,19 +1012,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Проект 22 -->
-                <div class="project-card" data-platform="testers" data-content="">
-                    <div class="project-image" style="background-image: url('https://sun1-56.userapi.com/Bvm7pENyHHklYmTS6ClNVpcZ03gdJGG2L71jAA/W9SNhdBaxqk.jpg');"></div>
-                    <div class="project-info">
-                        <h3 class="project-title">NAME</h3>
-                        <div class="testeram monoforum-badge">доступ тестерам</div>
-                        <p class="project-description">TITLE</p>
-                        <div class="project-links">
-                            <a href="#" class="project-link play-link" target="_blank" rel="noopener noreferrer" id="ErrorGame">Читать/Играть</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -1000,33 +1023,23 @@
     <div class="custom-alert-overlay" id="customAlert">
         <div class="custom-alert">
             <h3>Доступ ограничен</h3>
-            <p>Вам не доступен проект 15 </p>
+            <p>Вам не доступен проект 15</p>
             <button class="custom-alert-btn" id="customAlertClose">Понятно</button>
         </div>
     </div>
 
     <script>
-        // Обработка загрузки страницы
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 document.body.classList.add('loaded');
-                
-                // Удаляем прелоадер через 1 секунду после добавления класса loaded
                 setTimeout(() => {
                     const loader = document.querySelector('.loader-wrapper');
-                    if (loader) {
-                        loader.remove();
-                    }
-                    
-                    // Показываем первые карточки после загрузки
+                    if (loader) loader.remove();
                     showInitialCards();
-                    
-                    // Добавляем обработчик прокрутки
                     window.addEventListener('scroll', handleScroll);
                 }, 1000);
-            }, 2500); //время загрузки 2.5 секунды
+            }, 2500);
 
-            //Текущий год
             const currentYear = new Date().getFullYear();
             const footer = document.querySelector('footer p');
             if (footer) {
@@ -1034,29 +1047,21 @@
             }
         });
 
-        // Функция для показа первых карточек
         function showInitialCards() {
             const cards = document.querySelectorAll('.project-card');
-            const initialCount = 3; // Количество карточек, которые показываем сразу
-            
+            const initialCount = 3;
             cards.forEach((card, index) => {
                 if (index < initialCount) {
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 100); // Небольшая задержка между появлением карточек
+                    setTimeout(() => card.classList.add('visible'), index * 100);
                 }
             });
         }
         
-        // Функция для обработки прокрутки
         function handleScroll() {
             const cards = document.querySelectorAll('.project-card:not(.visible)');
             const triggerBottom = window.innerHeight * 0.8;
-            
             cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                
-                if (cardTop < triggerBottom) {
+                if (card.getBoundingClientRect().top < triggerBottom) {
                     card.classList.add('visible');
                 }
             });
@@ -1065,19 +1070,15 @@
         const themeSwitcher = document.getElementById('themeSwitcher');
         const themeIcons = document.querySelectorAll('.theme-icon');
         const body = document.body;
-        
         themeIcons.forEach(icon => {
             icon.addEventListener('click', () => {
                 const theme = icon.getAttribute('data-theme');
                 body.setAttribute('data-theme', theme);
-                
                 themeIcons.forEach(i => i.classList.remove('active'));
                 icon.classList.add('active');
-                
                 localStorage.setItem('theme', theme);
             });
         });
-        
         const savedTheme = localStorage.getItem('theme') || 'dark';
         body.setAttribute('data-theme', savedTheme);
         document.querySelector(`.theme-icon[data-theme="${savedTheme}"]`).classList.add('active');
@@ -1091,72 +1092,39 @@
             });
         });
 
-        //кастом ошибка
         function showCustomAlert(message, title = 'Уведомление') {
             const alertOverlay = document.getElementById('customAlert');
             const alertBox = alertOverlay.querySelector('.custom-alert');
-            
             alertBox.querySelector('h3').textContent = title;
             alertBox.querySelector('p').textContent = message;
-            
             alertOverlay.classList.add('active');
-            
-            // Закрытие по кнопке
-            document.getElementById('customAlertClose').onclick = function() {
-                alertOverlay.classList.remove('active');
-            };
-            
-            // Закрытие по клику вне окна
-            alertOverlay.onclick = function(e) {
-                if (e.target === alertOverlay) {
-                    alertOverlay.classList.remove('active');
-                }
-            };
+            document.getElementById('customAlertClose').onclick = () => alertOverlay.classList.remove('active');
+            alertOverlay.onclick = (e) => { if (e.target === alertOverlay) alertOverlay.classList.remove('active'); };
         }
         
-        // Обновите обработчик для проекта 15
         document.addEventListener('DOMContentLoaded', function() {
             const errorElement = document.getElementById('ErrorGame');
-                
             if (errorElement) {
                 errorElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    showCustomAlert('Вам не доступна игра', 'Доступ ограничен');
+                    showCustomAlert('Вам не доступен проект 15 (что то)', 'Доступ ограничен');
                 });
             }
         });
 
-        // Добавляем обработчики для фильтрации
         document.addEventListener('DOMContentLoaded', function() {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const projectCards = document.querySelectorAll('.project-card');
-            
-            // Текущие активные фильтры
-            const activeFilters = {
-                platform: 'all',
-                content: 'all'
-            };
+            const activeFilters = { platform: 'all', content: 'all' };
             
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const filterType = this.getAttribute('data-filter-type');
                     const filterValue = this.getAttribute('data-filter-value');
-                    
-                    // Если это та же кнопка, что и активная - ничего не делаем
                     if (activeFilters[filterType] === filterValue) return;
-                    
-                    // Удаляем активный класс у всех кнопок этой группы
-                    document.querySelectorAll(`.filter-btn[data-filter-type="${filterType}"]`).forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    
-                    // Добавляем активный класс текущей кнопке
+                    document.querySelectorAll(`.filter-btn[data-filter-type="${filterType}"]`).forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Обновляем активный фильтр
                     activeFilters[filterType] = filterValue;
-                    
-                    // Применяем фильтры
                     filterProjects();
                 });
             });
@@ -1165,124 +1133,122 @@
                 projectCards.forEach(card => {
                     const cardPlatform = card.getAttribute('data-platform');
                     const cardContent = card.getAttribute('data-content');
-                    
-                    // Проверяем соответствие платформе
-                    const platformMatch = 
-                        activeFilters.platform === 'all' || 
-                        cardPlatform === activeFilters.platform;
-                    
-                    // Проверяем соответствие типу контента
-                    const contentMatch = 
-                        activeFilters.content === 'all' || 
-                        cardContent === activeFilters.content;
-                    
-                    // Показываем/скрываем карточки
+                    const platformMatch = activeFilters.platform === 'all' || cardPlatform === activeFilters.platform;
+                    const contentMatch = activeFilters.content === 'all' || cardContent === activeFilters.content;
                     if (platformMatch && contentMatch) {
                         card.classList.remove('hidden');
-                        if (!card.classList.contains('visible')) {
-                            card.classList.add('visible');
-                        }
+                        if (!card.classList.contains('visible')) card.classList.add('visible');
                     } else {
                         card.classList.add('hidden');
                     }
                 });
             }
-            
-            // Инициализируем фильтры по умолчанию
             filterProjects();
         });
+
+        // ========== МОДАЛЬНОЕ ОКНО К 28 АПРЕЛЯ (ДЕНЬ РОЖДЕНИЯ КИРИЛЛА) ==========
+        function showBirthdayModal() {
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+            const storedDate = localStorage.getItem('birthday_shown_date');
+            if (storedDate === todayStr) return;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'birthday-modal-overlay';
+            overlay.innerHTML = `
+                <div class="birthday-modal">
+                    <h2>🎉 С Днём Рождения! 🎉</h2>
+                    <p>Сегодня 28 апреля — день рождения Кирилла!<br>Не забудь поздравить его</p>
+                    <a href="https://t.me/Kirill_Florik" class="telegram-link" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-telegram"></i> Поздравить в Telegram
+                    </a>
+                    <br>
+                    <button class="close-btn">Закрыть</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            setTimeout(() => overlay.classList.add('active'), 10);
+            
+            const closeBtn = overlay.querySelector('.close-btn');
+            closeBtn.addEventListener('click', () => {
+                overlay.classList.remove('active');
+                setTimeout(() => overlay.remove(), 300);
+            });
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                    setTimeout(() => overlay.remove(), 300);
+                }
+            });
+            localStorage.setItem('birthday_shown_date', todayStr);
+        }
+        
+        const now = new Date();
+        if (now.getMonth() === 3 && now.getDate() === 28) {
+            showBirthdayModal();
+        }
     </script>
 
     <script>
     const CACHE_NAME = 'my-site-cache-v1';
-    const urlsToCache = [
-    '/',
-    '/projects/',
-    '/styles/main.css',
-    '/script/main.js'
-    ];
-
+    const urlsToCache = ['/', '/projects/', '/styles/main.css', '/script/main.js'];
     self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(cache => {
-            return cache.addAll(urlsToCache);
-        })
-    );
+        event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
     });
     document.addEventListener('DOMContentLoaded', function() {
-    const orderBtn = document.getElementById('orderSiteBtn');
-    
-    if (orderBtn) {
-        orderBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            showOrderModal();
-        });
-    }
-    
-    function showOrderModal() {
-        const modalHtml = `
-            <div class="custom-alert-overlay active" id="orderModal">
-                <div class="custom-alert">
-                    <h3>Заказать сайт бесплатно</h3>
-                    <p>Хотите собственный сайт? Свяжитесь со мной для обсуждения деталей!</p>
-                    <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                        <a href="https://t.me/kirill_florik?text=привет+сделай+сайт+пожалуйста+(название+сайта)" 
-                           class="custom-alert-btn" 
-                           style="background: rgba(39, 167, 231, 0.8); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
-                           target="_blank">
-                            <i class="fab fa-telegram"></i> Написать в Telegram
-                        </a>
-                        <a href="https://vk.com/Kirill_Florik" 
-                           class="custom-alert-btn" 
-                           style="background: #4C75A3; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
-                           target="_blank">
-                            <i class="fab fa-vk"></i> Написать в ВКонтакте
-                        </a>
-                        <button class="custom-alert-btn" id="closeOrderModal" style="background: var(--darker);">
-                            Закрыть
-                        </button>
+        const orderBtn = document.getElementById('orderSiteBtn');
+        if (orderBtn) {
+            orderBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                showOrderModal();
+            });
+        }
+        function showOrderModal() {
+            const modalHtml = `
+                <div class="custom-alert-overlay active" id="orderModal">
+                    <div class="custom-alert">
+                        <h3>Заказать сайт бесплатно</h3>
+                        <p>Хотите собственный сайт? Свяжитесь со мной для обсуждения деталей!</p>
+                        <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                            <a href="https://t.me/kirill_florik?text=привет+сделай+сайт+пожалуйста+(название+сайта)" 
+                               class="custom-alert-btn" 
+                               style="background: rgba(39, 167, 231, 0.8); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+                               target="_blank">
+                                <i class="fab fa-telegram"></i> Написать в Telegram
+                            </a>
+                            <a href="https://vk.com/Kirill_Florik" 
+                               class="custom-alert-btn" 
+                               style="background: #4C75A3; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+                               target="_blank">
+                                <i class="fab fa-vk"></i> Написать в ВКонтакте
+                            </a>
+                            <button class="custom-alert-btn" id="closeOrderModal" style="background: var(--darker);">
+                                Закрыть
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
-        
-        // Удаляем существующее модальное окно заказа (если есть)
-        const existingModal = document.getElementById('orderModal');
-        if (existingModal) {
-            existingModal.remove();
+            `;
+            const existingModal = document.getElementById('orderModal');
+            if (existingModal) existingModal.remove();
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            document.getElementById('closeOrderModal').addEventListener('click', function() {
+                const modal = document.getElementById('orderModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
+            document.getElementById('orderModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    setTimeout(() => this.remove(), 300);
+                }
+            });
         }
-        
-        // Добавляем новое модальное окно
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        
-        // Закрытие модального окна
-        document.getElementById('closeOrderModal').addEventListener('click', function() {
-            const modal = document.getElementById('orderModal');
-            if (modal) {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            }
-        });
-        
-        // Закрытие по клику вне окна
-        document.getElementById('orderModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                setTimeout(() => this.remove(), 300);
-            }
-        });
-    }
-});
-
-
+    });
     self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-        .then(response => {
-            return response || fetch(event.request);
-        })
-    );
+        event.respondWith(caches.match(event.request).then(response => response || fetch(event.request)));
     });
     </script>
 </body>

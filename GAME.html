@@ -6,200 +6,267 @@
   <title>3D Runner Ready</title>
   <style>
     :root {
-      color-scheme: dark;
+      --primary: #8a63f2;
+      --primary-glow: rgba(138, 99, 242, 0.4);
+      --secondary: #63f2c8;
+      --accent: #ff7e5f;
+      --dark: #121212;
+      --darker: #0a0a0a;
+      --light: #e0e0e0;
+      --lighter: #ffffff;
+      --card-bg: #1e1e1e;
+      --text: #e0e0e0;
+      --text-secondary: #a0a0a0;
+      --border-glow: rgba(138, 99, 242, 0.3);
+      --glass-bg: rgba(30, 30, 40, 0.75);
+      --glass-border: rgba(138, 99, 242, 0.25);
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none; /* для чистоты, но не ломает ввод */
+    }
+
     body {
       margin: 0;
       overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: #05070d;
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--dark);
+      color: var(--text);
     }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--darker);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
     #hud {
       position: fixed;
-      top: 14px;
-      left: 14px;
-      z-index: 10;
+      top: 20px;
+      left: 20px;
+      z-index: 30;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.45);
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      gap: 10px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(138, 99, 242, 0.1);
+      padding: 12px 20px;
+      min-width: 250px;
+      transition: transform 0.2s ease;
     }
+
     #hud span {
-      font-size: 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      color: var(--lighter);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 14px;
+      border-radius: 40px;
+      border: 1px solid rgba(138, 99, 242, 0.25);
+      backdrop-filter: blur(4px);
     }
+
+    #hud span::before {
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 0.85rem;
+      color: var(--secondary);
+    }
+    #score::before { content: "\f005"; }      /* звезда */
+    #coins::before { content: "\f3d1"; }      /* монета */
+    #speed::before { content: "\f0e4"; }      /* тахометр */
+    #magnet-status::before { content: "\f3e2"; }
+
+    #center-message {
+      position: fixed;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--primary);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.4rem;
+      padding: 12px 24px;
+      border-radius: 80px;
+      box-shadow: 0 0 20px var(--primary-glow);
+      white-space: nowrap;
+      text-shadow: 0 0 6px rgba(0,0,0,0.5);
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+    #center-message.hidden { display: none; }
+
     #overlay {
       position: fixed;
       inset: 0;
-      z-index: 20;
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      gap: 10px;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.65);
-      padding: 12px;
+      gap: 18px;
+      background: radial-gradient(circle at 30% 10%, rgba(138, 99, 242, 0.2), rgba(10, 10, 10, 0.92));
+      backdrop-filter: blur(12px);
+      padding: 20px;
     }
-    #overlay.hidden {
-      display: none;
-    }
+    #overlay.hidden { display: none; }
+
     .title {
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--lighter), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      letter-spacing: -0.5px;
     }
+
     .hint {
-      opacity: 0.9;
-      max-width: 680px;
-      line-height: 1.4;
+      max-width: 640px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      padding: 14px 24px;
+      border-radius: 28px;
+      border: 1px solid var(--border-glow);
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
-    #menu-stats {
-      margin-top: 6px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 8px;
-      min-width: 280px;
-    }
-    #menu-stats.hidden {
-      display: none;
-    }
-    #menu-stats div {
-      font-size: 15px;
-      margin: 4px 0;
-    }
-    #shop {
-      margin-top: 8px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 8px;
-      min-width: 280px;
+
+    #menu-stats, #shop, #locations, #settings, #music-box {
+      background: var(--card-bg);
+      border-radius: 28px;
+      border: 1px solid rgba(138, 99, 242, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      padding: 1.2rem 1.5rem;
+      width: 320px;
       text-align: left;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
     }
-    #shop.hidden {
-      display: none;
+
+    #menu-stats div, #shop div, #locations div, #settings div, #music-box div {
+      color: var(--text);
     }
-    #shop-title {
-      font-size: 16px;
+
+    #shop-title, #settings-title, #music-title, #locations-title {
+      font-size: 1.4rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
+      color: var(--primary);
+      border-left: 3px solid var(--secondary);
+      padding-left: 12px;
     }
+
+    .shop-item-btn, .loc-item, .theme-btn, .music-btn, .pause-btn {
+      background: rgba(138, 99, 242, 0.1);
+      border: 1px solid var(--border-glow);
+      border-radius: 60px;
+      padding: 8px 16px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      color: var(--lighter);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(4px);
+    }
+    .shop-item-btn:hover, .loc-item:hover, .theme-btn:hover, .music-btn:hover, .pause-btn:hover {
+      background: var(--primary);
+      border-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(138, 99, 242, 0.3);
+    }
+
+    .loc-item.active {
+      background: var(--primary);
+      border-color: var(--secondary);
+      font-weight: bold;
+    }
+
     #shop-items {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      font-size: 14px;
-      opacity: 0.95;
-    }
-    .shop-item-btn {
-      width: 100%;
-      text-align: left;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      padding: 7px 9px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .shop-item-btn:hover {
-      background: rgba(255, 255, 255, 0.14);
-    }
-.shop-item-btn:disabled {
-      cursor: default;
-      opacity: 0.7;
-    }
-    .loc-item {
-      padding: 6px 8px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .loc-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-    .loc-item.active {
-      border: 1px solid #4eff8a;
-      background: rgba(78, 255, 138, 0.15);
-    }
-    #settings {
+      gap: 10px;
       margin-top: 8px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 8px;
-      min-width: 280px;
-      text-align: left;
     }
-    #settings.hidden {
-      display: none;
-    }
-    #settings-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
+
     #theme-buttons {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-top: 6px;
     }
     .theme-btn {
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      padding: 5px 9px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
+      background: #2a2a36;
     }
     .theme-btn.active {
-      border-color: #ffd66e;
-      background: rgba(255, 208, 90, 0.2);
+      background: var(--primary);
+      border-color: var(--secondary);
     }
-    #center-message {
-      position: fixed;
-      left: 50%;
-      top: 24px;
-      transform: translateX(-50%);
-      z-index: 25;
-      padding: 10px 16px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: rgba(255, 255, 255, 0.92);
-      font-size: 28px;
-      letter-spacing: 0.4px;
-      pointer-events: none;
-      white-space: pre-line;
-      text-align: center;
+
+    #play-btn {
+      background: linear-gradient(105deg, var(--primary), #6c4bcb);
+      border: none;
+      padding: 12px 36px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(138, 99, 242, 0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 12px;
     }
-    #center-message.hidden {
-      display: none;
+    #play-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 30px var(--primary-glow);
+      background: linear-gradient(105deg, #9b7cff, var(--primary));
     }
-    #pause-actions {
+
+    .pause-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 6px;
-      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 12px;
       justify-content: center;
     }
-    #pause-actions.hidden {
-      display: none;
-    }
+    #pause-actions.hidden { display: none; }
     .pause-btn {
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
+      background: var(--darker);
+      border-color: var(--primary);
     }
+
+    #music-site-link {
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
     #mobile-controls {
       position: fixed;
       left: 0;
@@ -233,6 +300,39 @@
       cursor: pointer;
       user-select: none;
       touch-action: manipulation;
+    }
+
+    #locations-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .loc-item {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .shop-item-btn:disabled {
+      opacity: 0.6;
+      transform: none;
+      cursor: default;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 600px) {
+      #hud { scale: 0.85; transform-origin: top left; min-width: 200px; padding: 8px 14px; }
+      .title { font-size: 2rem; }
+      #menu-stats, #shop, #settings, #music-box, #locations { width: 86vw; max-width: 360px; }
+      #center-message { font-size: 1rem; white-space: nowrap; padding: 8px 18px; top: 14px; }
+    }
+
+    button, .shop-item-btn, .theme-btn {
+      font-family: inherit;
     }
   </style>
 </head>
@@ -276,6 +376,11 @@
         <button class="theme-btn" data-theme="evening">Вечер</button>
         <button class="theme-btn" data-theme="night">Ночь</button>
       </div>
+    </div>
+    <div id="music-box">
+      <div id="music-title">Музыка для игры</div>
+      <div id="music-hint">Чтобы не было скучно играть — слушайте песню во время игры.</div>
+      <a id="music-site-link" class="music-btn" href="https://kirill-fe.github.io/music/idx#page=1" target="_blank" rel="noopener noreferrer"><i class="fab fa-spotify"></i> Открыть сайт музыки</a>
     </div>
   </div>
   <div id="mobile-controls">
@@ -2199,3 +2304,4 @@
   </script>
 </body>
 </html>
+
